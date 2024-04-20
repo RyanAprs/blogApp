@@ -1,6 +1,9 @@
 import express, { Request, Response } from "express";
 import { Blogrouter } from "./routes/blog.route";
 
+// connect to db
+import "./utils/connectDB";
+
 const app = express();
 const port: number = 3000;
 
