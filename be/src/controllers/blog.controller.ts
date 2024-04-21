@@ -1,7 +1,19 @@
 import { Request, Response } from "express";
+import { getAllBlogs } from "../services/blog.service";
 
-export const getBlog = (req: Request, res: Response) => {
-  res.send("Get all blogs");
+export const getBlog = async (req: Request, res: Response) => {
+  const {
+    params: { id },
+  } = req;
+
+  if (id) {
+    console.log("get product by id");
+  } else {
+    await getAllBlogs(req, res, (error) => {
+      console.log(error);
+      return res.status(500).json({ message: "Internal Server Error" });
+    });
+  }
 };
 
 export const createBlog = (req: Request, res: Response) => {
