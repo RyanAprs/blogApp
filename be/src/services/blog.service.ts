@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import BlogPost from "../models/blog.model";
+import BlogModel from "../models/blog.model";
 
 export const getAllBlogs = async (
   req: Request,
@@ -11,10 +11,10 @@ export const getAllBlogs = async (
   let totalItems;
 
   try {
-    const count = await BlogPost.countDocuments();
+    const count = await BlogModel.countDocuments();
     totalItems = count;
 
-    const blogs = await BlogPost.find()
+    const blogs = await BlogModel.find()
       .skip(
         (parseInt(currentPage.toString()) - 1) * parseInt(perPage.toString())
       )
@@ -45,4 +45,8 @@ export const getAllBlogs = async (
     console.log(error);
     return res.status(500).json({ message: "Internal Server Error" });
   }
+};
+
+export const getBlogById = async (id: string) => {
+  return await BlogModel.findById({ blog_id: id });
 };

@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { getAllBlogs } from "../services/blog.service";
+import { getAllBlogs, getBlogById } from "../services/blog.service";
 
 export const getBlog = async (req: Request, res: Response) => {
   const {
@@ -7,7 +7,22 @@ export const getBlog = async (req: Request, res: Response) => {
   } = req;
 
   if (id) {
-    console.log("get product by id");
+    const blog = await getBlogById(id);
+    if (blog) {
+      return res.status(200).send({
+        status: true,
+        status_code: 200,
+        message: "Get data blog successfully",
+        data: blog,
+      });
+    } else {
+      return res.status(404).send({
+        status: false,
+        status_code: 404,
+        message: "Data not found",
+        data: {},
+      });
+    }
   } else {
     await getAllBlogs(req, res, (error) => {
       console.log(error);
