@@ -3,5 +3,6 @@ export default interface BlogType {
   title: string;
   description: string;
   image: string;
+  imageUrl: String;
   author: string;
 }

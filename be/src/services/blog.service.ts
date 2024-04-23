@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
-import BlogModel from "../models/blog.model";
+import blogModel from "../models/blog.model";
+// import BlogType from "../types/blog.type";
 
 export const getAllBlogs = async (
   req: Request,
@@ -11,10 +12,11 @@ export const getAllBlogs = async (
   let totalItems;
 
   try {
-    const count = await BlogModel.countDocuments();
+    const count = await blogModel.countDocuments();
     totalItems = count;
 
-    const blogs = await BlogModel.find()
+    const blogs = await blogModel
+      .find()
       .skip(
         (parseInt(currentPage.toString()) - 1) * parseInt(perPage.toString())
       )
@@ -47,6 +49,11 @@ export const getAllBlogs = async (
   }
 };
 
+// Still have an error get product by id
 export const getBlogById = async (id: string) => {
-  return await BlogModel.findById({ blog_id: id });
+  return await blogModel.findById({ blog_id: id });
+};
+
+export const insertBlog = async (payload: any) => {
+  return await blogModel.create(payload);
 };

@@ -9,6 +9,9 @@ const port: number = 3000;
 
 app.use("/api/v1/blog", Blogrouter);
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
