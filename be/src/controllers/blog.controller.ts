@@ -1,8 +1,7 @@
 import { Request, Response } from "express";
 import { getAllBlogs, getBlogById, insertBlog } from "../services/blog.service";
 import { v4 as uuidv4 } from "uuid";
-import path from "path";
-import multer from "multer";
+import uploadAsync from "../config/upload.config";
 
 export const getBlog = async (req: Request, res: Response) => {
   const {
@@ -33,42 +32,14 @@ export const getBlog = async (req: Request, res: Response) => {
     });
   }
 };
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "uploads/");
-  },
-  filename: (req, file, cb) => {
-    const ext = path.extname(file.originalname);
-    const fileName = uuidv4() + ext;
-    cb(null, fileName);
-  },
-});
-
-const fileFilter = (req: Request, file: Express.Multer.File, cb: any) => {
-  const allowedExtensions = [".jpg", ".jpeg", ".png"];
-  const ext = path.extname(file.originalname).toLowerCase();
-  if (allowedExtensions.includes(ext)) {
-    cb(null, true);
-  } else {
-    cb(new Error("Only .jpg, .jpeg, and .png files are allowed"));
-  }
-};
-
-const upload = multer({ storage: storage, fileFilter: fileFilter }).single(
-  "image"
-);
 
 export const createBlog = async (req: Request, res: Response) => {
-  upload(req, res, (err) => {
-    if (err) {
-      return res.status(400).send({
-        status: false,
-        status_code: 400,
-        message: err.message,
-      });
-    }
+  try {
+    await uploadAsync(req, res);
 
     const { title, description, author } = req.body;
+    const blog_id = uuidv4(); 
+    const _id = uuidv4();
     const image = req.file ? req.file.filename : null;
 
     if (!title || !description || !author || !image) {
@@ -79,21 +50,31 @@ export const createBlog = async (req: Request, res: Response) => {
       });
     }
 
-    const blog = {
-      blog_id: uuidv4(),
+    const blogData = {
+      _id,
+      blog_id,
       title,
       description,
       author,
       image,
     };
+    await insertBlog(blogData);
     return res.status(200).send({
       status: true,
       status_code: 200,
-      message: "Get data blog successfully",
-      data: blog,
+      message: "Blog created successfully",
+      data: blogData,
     });
-  });
+  } catch (error: any) {
+    return res.status(422).send({
+      status: false,
+      status_code: 422,
+      message: error.message || "An error occurred",
+      data: {},
+    });
+  }
 };
+
 export const updateBlog = (req: Request, res: Response) => {
   res.send("Update blog");
 };
