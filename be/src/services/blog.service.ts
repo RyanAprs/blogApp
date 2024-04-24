@@ -49,9 +49,12 @@ export const getAllBlogs = async (
   }
 };
 
-// Still have an error get product by id
 export const getBlogById = async (id: string) => {
-  return await blogModel.findById({ blog_id: id });
+  return await blogModel.findOne({ blog_id: id });
+};
+
+export const getBlogByTitle = async (q: string) => {
+  return await blogModel.findOne({ title: q });
 };
 
 export const insertBlog = async (payload: any) => {

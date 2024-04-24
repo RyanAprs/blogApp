@@ -1,12 +1,15 @@
 import { Request, Response } from "express";
-import { getAllBlogs, getBlogById, insertBlog } from "../services/blog.service";
+import {
+  getAllBlogs,
+  getBlogById,
+  getBlogByTitle,
+  insertBlog,
+} from "../services/blog.service";
 import { v4 as uuidv4 } from "uuid";
 import uploadAsync from "../config/upload.config";
 
 export const getBlog = async (req: Request, res: Response) => {
-  const {
-    params: { id },
-  } = req;
+  const id = req.params.id;
 
   if (id) {
     const blog = await getBlogById(id);
@@ -14,7 +17,7 @@ export const getBlog = async (req: Request, res: Response) => {
       return res.status(200).send({
         status: true,
         status_code: 200,
-        message: "Get data blog successfully",
+        message: "Get detail data blog successfully",
         data: blog,
       });
     } else {
@@ -26,9 +29,30 @@ export const getBlog = async (req: Request, res: Response) => {
       });
     }
   } else {
-    await getAllBlogs(req, res, (error) => {
+    return await getAllBlogs(req, res, (error) => {
       console.log(error);
       return res.status(500).json({ message: "Internal Server Error" });
+    });
+  }
+};
+
+export const getSearchBlog = async (req: Request, res: Response) => {
+  const q = req.params.q;
+
+  const blog = await getBlogByTitle(q);
+  if (blog) {
+    return res.status(200).send({
+      status: true,
+      status_code: 200,
+      message: "Get data blog successfully",
+      data: blog,
+    });
+  } else {
+    return res.status(404).send({
+      status: false,
+      status_code: 404,
+      message: "Data not found",
+      data: {},
     });
   }
 };
@@ -38,7 +62,7 @@ export const createBlog = async (req: Request, res: Response) => {
     await uploadAsync(req, res);
 
     const { title, description, author } = req.body;
-    const blog_id = uuidv4(); 
+    const blog_id = uuidv4();
     const _id = uuidv4();
     const image = req.file ? req.file.filename : null;
 
