@@ -102,52 +102,50 @@ export const createBlog = async (req: Request, res: Response) => {
 };
 
 export const updateBlog = async (req: Request, res: Response) => {
-  const id = req.params.id;
-
-  const { title, description, author } = req.body;
-  const image = req.file ? req.file.filename : null;
-
-  if (
-    title === null ||
-    description === null ||
-    author === null ||
-    image === null
-  ) {
-    return res.status(400).send({
-      status: false,
-      status_code: 400,
-      message: "All fields are required",
-    });
-  }
-
-  const blogData = {
-    title,
-    description,
-    image,
-    author,
-  };
-
   try {
+    await uploadAsync(req, res);
+
+    const id = req.params.id;
+    const { title, description, author } = req.body;
+    const image = req.file ? req.file.filename : null;
+
+    if (!title || !description || !author || !image) {
+      return res.status(400).send({
+        status: false,
+        status_code: 400,
+        message: "All fields are required",
+      });
+    }
+
+    const blogData = {
+      title,
+      description,
+      author,
+      image,
+    };
+    
     const blog = await getBlogAndUpdate(id, blogData);
     if (blog) {
       return res.status(200).send({
         status: true,
         status_code: 200,
-        message: "Update blog successfully",
+        message: "Blog updated successfully",
+        data: blogData,
       });
     } else {
-      return res.status(404).send({
+      return res.status(404).json({
         status: false,
         status_code: 404,
         message: "Data not found",
         data: {},
       });
     }
-  } catch (error) {
+  } catch (error: any) {
     return res.status(422).send({
       status: false,
       status_code: 422,
-      message: error,
+      message: error.message || "An error occurred",
+      data: {},
     });
   }
 };

@@ -74,13 +74,13 @@ export const getBlogAndUpdate = async (id: string, payload: any) => {
 
 export const getBlogAndDelete = async (id: string) => {
   try {
-    const post = await blogModel.findOne({ blog_id: id });
-    if (!post) {
+    const blog = await blogModel.findOne({ blog_id: id });
+    if (!blog) {
       const error = new Error("Data not found");
       throw error;
     }
 
-    removeImage(post.image);
+    removeImage(blog.image);
     const result = await blogModel.findOneAndDelete({ blog_id: id });
     return result;
   } catch (error) {
