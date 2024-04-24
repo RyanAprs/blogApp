@@ -1,5 +1,5 @@
-import express, { Request, Response } from "express";
-import { Blogrouter } from "./routes/blog.route";
+import express from "express";
+import { routes } from "./routes/index";
 
 // connect to db
 import "./utils/connectDB";
@@ -10,7 +10,7 @@ const port: number = 3000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use("/api/v1/blog", Blogrouter);
+routes(app);
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
