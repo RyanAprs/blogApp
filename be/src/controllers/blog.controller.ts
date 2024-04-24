@@ -1,6 +1,8 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import {
   getAllBlogs,
+  getBlogAndDelete,
+  getBlogAndUpdate,
   getBlogById,
   getBlogByTitle,
   insertBlog,
@@ -99,10 +101,81 @@ export const createBlog = async (req: Request, res: Response) => {
   }
 };
 
-export const updateBlog = (req: Request, res: Response) => {
-  res.send("Update blog");
+export const updateBlog = async (req: Request, res: Response) => {
+  const id = req.params.id;
+
+  const { title, description, author } = req.body;
+  const image = req.file ? req.file.filename : null;
+
+  if (
+    title === null ||
+    description === null ||
+    author === null ||
+    image === null
+  ) {
+    return res.status(400).send({
+      status: false,
+      status_code: 400,
+      message: "All fields are required",
+    });
+  }
+
+  const blogData = {
+    title,
+    description,
+    image,
+    author,
+  };
+
+  try {
+    const blog = await getBlogAndUpdate(id, blogData);
+    if (blog) {
+      return res.status(200).send({
+        status: true,
+        status_code: 200,
+        message: "Update blog successfully",
+      });
+    } else {
+      return res.status(404).send({
+        status: false,
+        status_code: 404,
+        message: "Data not found",
+        data: {},
+      });
+    }
+  } catch (error) {
+    return res.status(422).send({
+      status: false,
+      status_code: 422,
+      message: error,
+    });
+  }
 };
 
-export const deleteBlog = (req: Request, res: Response) => {
-  res.send("Delete blog");
+export const deleteBlog = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const postId = req.params.id;
+
+  try {
+    const result = await getBlogAndDelete(postId);
+    if (result) {
+      res.status(200).json({
+        status: true,
+        status_code: 200,
+        message: "Delete blog successfully",
+      });
+    } else {
+      res.status(404).json({
+        status: false,
+        status_code: 404,
+        message: "Data not found",
+        data: {},
+      });
+    }
+  } catch (error) {
+    next(error);
+  }
 };

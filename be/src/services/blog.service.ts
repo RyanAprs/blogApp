@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import blogModel from "../models/blog.model";
-// import BlogType from "../types/blog.type";
+import removeImage from "../config/removeImage.config";
 
 export const getAllBlogs = async (
   req: Request,
@@ -59,4 +59,31 @@ export const getBlogByTitle = async (q: string) => {
 
 export const insertBlog = async (payload: any) => {
   return await blogModel.create(payload);
+};
+
+export const getBlogAndUpdate = async (id: string, payload: any) => {
+  return await blogModel.findOneAndUpdate(
+    {
+      blog_id: id,
+    },
+    {
+      $set: payload,
+    }
+  );
+};
+
+export const getBlogAndDelete = async (id: string) => {
+  try {
+    const post = await blogModel.findOne({ blog_id: id });
+    if (!post) {
+      const error = new Error("Data not found");
+      throw error;
+    }
+
+    removeImage(post.image);
+    const result = await blogModel.findOneAndDelete({ blog_id: id });
+    return result;
+  } catch (error) {
+    throw error;
+  }
 };
