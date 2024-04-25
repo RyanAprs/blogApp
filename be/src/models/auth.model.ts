@@ -26,9 +26,9 @@ const authSchema = new mongoose.Schema(
       default: null,
     },
   },
-  { timestamps: true, _id: false }
+  { timestamps: true, _id: true }
 );
 
-const authModel = mongoose.model("auth", authSchema);
+const authModel = mongoose.model("auths", authSchema);
 
 export default authModel;
