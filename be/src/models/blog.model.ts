@@ -2,10 +2,6 @@ import mongoose from "mongoose";
 
 const blogSchema = new mongoose.Schema(
   {
-    _id: {
-      type: String,
-      unique: true,
-    },
     blog_id: {
       type: String,
       unique: true,
@@ -23,7 +19,7 @@ const blogSchema = new mongoose.Schema(
       type: String,
     },
   },
-  { timestamps: true, _id: false }
+  { timestamps: true, _id: true }
 );
 
 const blogModel = mongoose.model("blogs", blogSchema);

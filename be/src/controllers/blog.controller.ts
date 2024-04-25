@@ -65,7 +65,6 @@ export const createBlog = async (req: Request, res: Response) => {
 
     const { title, description, author } = req.body;
     const blog_id = uuidv4();
-    const _id = uuidv4();
     const image = req.file ? req.file.filename : null;
 
     if (!title || !description || !author || !image) {
@@ -77,7 +76,6 @@ export const createBlog = async (req: Request, res: Response) => {
     }
 
     const blogData = {
-      _id,
       blog_id,
       title,
       description,
