@@ -8,7 +8,7 @@ import {
   insertBlog,
 } from "../services/blog.service";
 import { v4 as uuidv4 } from "uuid";
-import uploadAsync from "../config/upload.config";
+import { uploadAsync } from "../config/upload.config";
 
 export const getBlog = async (req: Request, res: Response) => {
   const id = req.params.id;
@@ -36,7 +36,7 @@ export const getBlog = async (req: Request, res: Response) => {
       return res.status(500).json({ message: "Internal Server Error" });
     });
   }
-};
+};                        
 
 export const getSearchBlog = async (req: Request, res: Response) => {
   const q = req.params.q;

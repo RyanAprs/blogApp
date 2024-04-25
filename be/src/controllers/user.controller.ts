@@ -1,5 +1,10 @@
 import { Request, Response } from "express";
-import { getAllUser, getUserById } from "../services/user.service";
+import {
+  getAllUser,
+  getUserAndUpdate,
+  getUserById,
+} from "../services/user.service";
+import { profileUploadAsync } from "../config/upload.config";
 
 export const getUsers = async (req: Request, res: Response) => {
   const id = req.params.id;
@@ -47,5 +52,55 @@ export const getUsers = async (req: Request, res: Response) => {
         data: {},
       });
     }
+  }
+};
+
+export const updateUser = async (req: Request, res: Response) => {
+  try {
+    profileUploadAsync(req, res);
+
+    const id = req.params.id;
+    const { name, email, password, bio } = req.body;
+    const image = req.file ? req.file : null;
+
+    if (!name || !email || !password) {
+      return res.status(400).send({
+        status: false,
+        status_code: 400,
+        message: "Fields are required",
+      });
+    }
+
+    const userData = {
+      email,
+      name,
+      password,
+      image,
+      bio,
+    };
+
+    const user = await getUserAndUpdate(id, userData);
+    if (user) {
+      return res.status(200).send({
+        status: true,
+        status_code: 200,
+        message: "User updated successfully",
+        data: userData,
+      });
+    } else {
+      return res.status(404).json({
+        status: false,
+        status_code: 404,
+        message: "Data not found",
+        data: {},
+      });
+    }
+  } catch (error: any) {
+    return res.status(422).send({
+      status: false,
+      status_code: 422,
+      message: error.message || "An error occurred",
+      data: {},
+    });
   }
 };

@@ -3,10 +3,27 @@ import { checkPassword, hashPassword } from "../utils/hashing";
 import { v4 as uuidv4 } from "uuid";
 import { createUser, findUserByEmail } from "../services/auth.service";
 import { signJWT } from "../utils/jwt";
+import validator from "validator";
 
 export const register = async (req: Request, res: Response) => {
   const user_id = uuidv4();
   const { email, name, password } = req.body;
+
+  if (req.body.email && !validator.isEmail(req.body.email)) {
+    return res.status(400).send({
+      status: false,
+      status_code: 400,
+      message: "Invalid email format",
+    });
+  }
+
+  if (password.length <= 6) {
+    return res.status(400).send({
+      status: false,
+      status_code: 400,
+      message: "password must be at least 6 characters",
+    });
+  }
 
   if (!email || !name || !password) {
     return res.status(400).send({
@@ -54,6 +71,14 @@ export const register = async (req: Request, res: Response) => {
 export const login = async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
+
+    if (req.body.email && !validator.isEmail(req.body.email)) {
+      return res.status(400).send({
+        status: false,
+        status_code: 400,
+        message: "Invalid email format",
+      });
+    }
 
     if (!email || !password) {
       return res.status(400).send({

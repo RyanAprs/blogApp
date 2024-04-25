@@ -14,3 +14,14 @@ export const getAllUser = async () => {
 export const getUserById = async (id: string) => {
   return await authModel.findOne({ user_id: id });
 };
+
+export const getUserAndUpdate = async (id: string, payload: any) => {
+  return await authModel.findOneAndUpdate(
+    {
+      user_id: id,
+    },
+    {
+      $set: payload,
+    }
+  );
+};
