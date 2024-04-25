@@ -7,6 +7,7 @@ import {
   findUserByUsername,
   getAllUser,
 } from "../services/auth.service";
+import { signJWT } from "../utils/jwt";
 
 export const getUsers = async (req: Request, res: Response) => {
   try {
@@ -107,6 +108,8 @@ export const login = async (req: Request, res: Response) => {
         });
       }
 
+      const accessToken = signJWT({ ...user }, { expiresIn: "1d" });
+
       const validPassword =
         user && typeof user.password === "string"
           ? checkPassword(password, user.password)
@@ -125,6 +128,7 @@ export const login = async (req: Request, res: Response) => {
         status_code: 200,
         message: "Login success",
         data: user,
+        token: accessToken,
       });
     } catch (error: any) {
       return res.status(422).send({
