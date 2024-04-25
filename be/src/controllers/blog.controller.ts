@@ -121,7 +121,7 @@ export const updateBlog = async (req: Request, res: Response) => {
       author,
       image,
     };
-    
+
     const blog = await getBlogAndUpdate(id, blogData);
     if (blog) {
       return res.status(200).send({
@@ -148,11 +148,7 @@ export const updateBlog = async (req: Request, res: Response) => {
   }
 };
 
-export const deleteBlog = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+export const deleteBlog = async (req: Request, res: Response) => {
   const postId = req.params.id;
 
   try {
@@ -171,7 +167,11 @@ export const deleteBlog = async (
         data: {},
       });
     }
-  } catch (error) {
-    next(error);
+  } catch (error: any) {
+    return res.status(422).send({
+      status: false,
+      status_code: 422,
+      message: error.message,
+    });
   }
 };
