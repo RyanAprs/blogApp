@@ -10,7 +10,7 @@ const authSchema = new mongoose.Schema(
       type: String,
       unique: true,
     },
-    username: {
+    name: {
       type: String,
       unique: true,
     },

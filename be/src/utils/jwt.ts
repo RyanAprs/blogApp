@@ -12,6 +12,7 @@ export const signJWT = (
   });
 };
 
+
 export const verifyJwt = (token: string) => {
   const decoded: any = jwt.verify(token, CONFIG.jwt_public);
   try {

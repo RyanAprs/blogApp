@@ -1,47 +1,14 @@
 import { Request, Response } from "express";
 import { checkPassword, hashPassword } from "../utils/hashing";
 import { v4 as uuidv4 } from "uuid";
-import {
-  createUser,
-  findUserByEmail,
-  findUserByUsername,
-  getAllUser,
-} from "../services/auth.service";
+import { createUser, findUserByEmail } from "../services/auth.service";
 import { signJWT } from "../utils/jwt";
-
-export const getUsers = async (req: Request, res: Response) => {
-  try {
-    const users = await getAllUser();
-    if (Array.isArray(users) && users.length > 0) {
-      return res.status(200).send({
-        status: true,
-        status_code: 200,
-        message: "Get data user success",
-        data: users,
-      });
-    } else {
-      return res.status(200).send({
-        status: true,
-        status_code: 200,
-        message: "No user",
-        data: {},
-      });
-    }
-  } catch (error) {
-    return res.status(500).send({
-      status: false,
-      status_code: 500,
-      message: "Internal Server Error",
-      data: {},
-    });
-  }
-};
 
 export const register = async (req: Request, res: Response) => {
   const user_id = uuidv4();
-  const { email, username, password } = req.body;
+  const { email, name, password } = req.body;
 
-  if (!email || !username || !password) {
+  if (!email || !name || !password) {
     return res.status(400).send({
       status: false,
       status_code: 400,
@@ -53,19 +20,18 @@ export const register = async (req: Request, res: Response) => {
   const authData = {
     user_id,
     email,
-    username,
+    name,
     password: hashedPassword,
   };
 
   try {
     const userEmail = await findUserByEmail(email);
-    const userUsername = await findUserByUsername(username);
 
-    if (userEmail && userUsername) {
+    if (userEmail) {
       return res.status(409).send({
         status: false,
         status_code: 409,
-        message: "Email or username is already registered",
+        message: "Email is already registered",
       });
     }
 
