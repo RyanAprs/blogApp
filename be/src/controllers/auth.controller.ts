@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 import {
   createUser,
   findUserByEmail,
+  findUserByUsername,
   getAllUser,
 } from "../services/auth.service";
 
@@ -56,6 +57,17 @@ export const register = async (req: Request, res: Response) => {
   };
 
   try {
+    const userEmail = await findUserByEmail(email);
+    const userUsername = await findUserByUsername(username);
+
+    if (userEmail && userUsername) {
+      return res.status(409).send({
+        status: false,
+        status_code: 409,
+        message: "Email or username is already registered",
+      });
+    }
+
     await createUser(authData);
     return res.status(201).json({
       status: true,
