@@ -18,11 +18,9 @@ const authSchema = new mongoose.Schema(
     },
     image: {
       type: String,
-      default: null,
     },
     bio: {
       type: String,
-      default: null,
     },
   },
   { timestamps: true, _id: true }

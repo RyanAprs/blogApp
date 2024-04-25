@@ -8,6 +8,8 @@ import validator from "validator";
 export const register = async (req: Request, res: Response) => {
   const user_id = uuidv4();
   const { email, name, password } = req.body;
+  const image = null;
+  const bio = null;
 
   if (req.body.email && !validator.isEmail(req.body.email)) {
     return res.status(400).send({
@@ -39,6 +41,8 @@ export const register = async (req: Request, res: Response) => {
     email,
     name,
     password: hashedPassword,
+    image,
+    bio,
   };
 
   try {

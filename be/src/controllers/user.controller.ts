@@ -5,6 +5,7 @@ import {
   getUserById,
 } from "../services/user.service";
 import { profileUploadAsync } from "../config/upload.config";
+import { hashPassword } from "../utils/hashing";
 
 export const getUsers = async (req: Request, res: Response) => {
   const id = req.params.id;
@@ -57,11 +58,11 @@ export const getUsers = async (req: Request, res: Response) => {
 
 export const updateUser = async (req: Request, res: Response) => {
   try {
-    profileUploadAsync(req, res);
+    await profileUploadAsync(req, res);
 
     const id = req.params.id;
     const { name, email, password, bio } = req.body;
-    const image = req.file ? req.file : null;
+    const image = req.file ? req.file.originalname : null;
 
     if (!name || !email || !password) {
       return res.status(400).send({
@@ -71,10 +72,12 @@ export const updateUser = async (req: Request, res: Response) => {
       });
     }
 
+    const hashedPassword = hashPassword(password);
+
     const userData = {
       email,
       name,
-      password,
+      password: hashedPassword,
       image,
       bio,
     };

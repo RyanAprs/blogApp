@@ -1,9 +1,8 @@
 import express from "express";
 import { routes } from "./routes/index";
-
+import deserializeToken from "./middleware/deserializeToken";
 // connect to db
 import "./utils/connectDB";
-import deserializeToken from "./middleware/deserializeToken";
 
 const app = express();
 const port: number = 3000;
