@@ -26,7 +26,7 @@ export const getBlog = async (req: Request, res: Response) => {
       return res.status(404).send({
         status: false,
         status_code: 404,
-        message: "No users",
+        message: "Data not found",
         data: {},
       });
     }

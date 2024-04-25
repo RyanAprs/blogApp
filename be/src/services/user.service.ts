@@ -10,3 +10,7 @@ export const getAllUser = async () => {
       console.log(error);
     });
 };
+
+export const getUserById = async (id: string) => {
+  return await authModel.findOne({ user_id: id });
+};
