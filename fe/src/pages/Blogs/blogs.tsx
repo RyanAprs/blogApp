@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const Blogs = () => {
   const [blogs, setBlogs] = useState([]);
@@ -26,12 +27,13 @@ const Blogs = () => {
         {blogs?.map((blog, index) => {
           const dateSlice = blog.createdAt.slice(0, 10);
           return (
-            <div
+            <Link
+              to={`${blog.blog_id}`}
               key={index}
-              className="cursor-pointer bg-slate-500 p-4 border-[3px] border-black rounded-lg"
+              className="cursor-pointer bg-slate-500 p-4 border-[3px] border-black rounded"
             >
               <img
-                className="h-[350px] w-[550px] object-cover border-[1px] border-black rounded-lg"
+                className="h-[350px] w-[550px] object-cover border-[1px] border-black rounded"
                 src={`http://localhost:3000/${blog.image}`}
                 alt="blog image"
               />
@@ -39,7 +41,7 @@ const Blogs = () => {
               <div className="flex gap-3">
                 <p>{blog.author} </p>-<p>{dateSlice}</p>
               </div>
-            </div>
+            </Link>
           );
         })}
       </div>

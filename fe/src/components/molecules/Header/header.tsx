@@ -12,7 +12,7 @@ const Header: React.FC = () => {
         </Link>
       </div>
       <nav className="text-lg flex gap-4">
-        <Link to="/blogs">
+        <Link to="/blog">
           <h1>Blogs</h1>
         </Link>
         <Link to="/contact">

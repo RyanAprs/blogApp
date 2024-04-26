@@ -5,6 +5,7 @@ import Header from "../../components/molecules/Header/header";
 import Home from "../../pages/Home/home";
 import Blogs from "../../pages/Blogs/blogs";
 import Contact from "../../pages/Contact/contact";
+import DetailBlog from "../../pages/Blogs/detailBlog";
 
 const Routing = () => {
   return (
@@ -22,11 +23,20 @@ const Routing = () => {
           }
         />
         <Route
-          path="/blogs"
+          path="/blog"
           element={
             <>
               <Header />
               <Blogs />
+            </>
+          }
+        />
+        <Route
+          path="/blog/:id"
+          element={
+            <>
+              <Header />
+              <DetailBlog />
             </>
           }
         />
