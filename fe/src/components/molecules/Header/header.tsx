@@ -6,18 +6,24 @@ const Header: React.FC = () => {
     <header className="flex justify-between items-center py-4 px-8 bg-gray-800 text-white">
       <div>
         <Link to="/">
-          <h1>RyanBlogs</h1>
+          <h1 className="text-2xl font-bold text-white">Ryan<span className="text-red-700">Blogs</span></h1>
         </Link>
       </div>
-      <nav>
+      <nav className="text-lg flex gap-4">
         <Link to="/blogs">
           <h1>Blogs</h1>
         </Link>
+        <Link to="/blogs">
+          <h1>Contact</h1>
+        </Link>
       </nav>
       <div>
-        <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
+        <Link
+          to="/login"
+          className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded flex justify-center items-center"
+        >
           Login
-        </button>
+        </Link>
       </div>
     </header>
   );

@@ -21,23 +21,29 @@ const Blogs = () => {
   }, []);
 
   return (
-    <div>
-      <div>
+    <>
+      <div className="grid md:grid-cols-2 grid-cols-1 gap-4 p-4 text-white items-center justify-center">
         {blogs?.map((blog, index) => {
+          const dateSlice = blog.createdAt.slice(0, 10);
           return (
-            <div key={index}>
+            <div
+              key={index}
+              className="cursor-pointer bg-slate-500 p-4 border-[3px] border-black rounded-lg"
+            >
               <img
+                className="h-[350px] w-[550px] object-cover border-[1px] border-black rounded-lg"
                 src={`http://localhost:3000/${blog.image}`}
                 alt="blog image"
               />
-              <h1>{blog.title}</h1>
-              <p>{blog.description}</p>
-              <p>{blog.author}</p>
+              <h1 className="text-2xl">{blog.title}</h1>
+              <div className="flex gap-3">
+                <p>{blog.author} </p>-<p>{dateSlice}</p>
+              </div>
             </div>
           );
         })}
       </div>
-    </div>
+    </>
   );
 };
 
