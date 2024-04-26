@@ -4,6 +4,7 @@ import Register from "../../pages/Register/register";
 import Header from "../../components/molecules/Header/header";
 import Home from "../../pages/Home/home";
 import Blogs from "../../pages/Blogs/blogs";
+import Contact from "../../pages/Contact/contact";
 
 const Routing = () => {
   return (
@@ -26,6 +27,15 @@ const Routing = () => {
             <>
               <Header />
               <Blogs />
+            </>
+          }
+        />
+        <Route
+          path="/contact"
+          element={
+            <>
+              <Header />
+              <Contact />
             </>
           }
         />

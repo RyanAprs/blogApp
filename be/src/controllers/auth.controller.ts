@@ -19,19 +19,19 @@ export const register = async (req: Request, res: Response) => {
     });
   }
 
-  if (password.length <= 6) {
-    return res.status(400).send({
-      status: false,
-      status_code: 400,
-      message: "password must be at least 6 characters",
-    });
-  }
-
   if (!email || !name || !password) {
     return res.status(400).send({
       status: false,
       status_code: 400,
       message: "All fields are required",
+    });
+  }
+
+  if (password.length <= 6) {
+    return res.status(400).send({
+      status: false,
+      status_code: 400,
+      message: "password must be at least 6 characters",
     });
   }
 
@@ -57,9 +57,9 @@ export const register = async (req: Request, res: Response) => {
     }
 
     await createUser(authData);
-    return res.status(201).json({
+    return res.status(200).json({
       status: true,
-      status_code: 201,
+      status_code: 200,
       message: "Register successfully",
       data: authData,
     });
