@@ -16,6 +16,7 @@ const corsOrigin = {
   optionSuccessStatus: 200,
 };
 
+app.use(express.static("uploads"));
 app.use(cors(corsOrigin));
 app.use((req: Request, res: Response, next: NextFunction) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
