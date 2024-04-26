@@ -1,10 +1,12 @@
+import { Provider } from "react-redux";
+import Routing from "./config/routes";
+import store from "./config/redux/store";
+
 function App() {
   return (
-    <>
-      <div className="bg-slate-400 p-4 rounded-lg">
-        <h1 className="font-bold text-xl">Hello World</h1>
-      </div>
-    </>
+    <Provider store={store}>
+      <Routing />
+    </Provider>
   );
 }
 
