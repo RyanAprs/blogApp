@@ -5,6 +5,7 @@ import {
   getBlogAndUpdate,
   getBlogById,
   getBlogByTitle,
+  getBlogByUserId,
   insertBlog,
 } from "../services/blog.service";
 import { v4 as uuidv4 } from "uuid";
@@ -36,7 +37,20 @@ export const getBlog = async (req: Request, res: Response) => {
       return res.status(500).json({ message: "Internal Server Error" });
     });
   }
-};                        
+};
+
+export const getBlogByUser = async (req: Request, res: Response) => {
+  const { user_blog_id, user_id } = req.params;
+
+  try {
+    await getBlogByUserId(user_blog_id, user_id, req, res);
+  } catch (error) {
+    return await getAllBlogs(req, res, (error) => {
+      console.log(error);
+      return res.status(500).json({ message: "Internal Server Error" });
+    });
+  }
+};
 
 export const getSearchBlog = async (req: Request, res: Response) => {
   const q = req.params.q;
@@ -63,11 +77,11 @@ export const createBlog = async (req: Request, res: Response) => {
   try {
     await uploadAsync(req, res);
 
-    const { title, description, author } = req.body;
+    const { title, description, author, user_blog_id } = req.body;
     const blog_id = uuidv4();
     const image = req.file ? req.file.filename : null;
 
-    if (!title || !description || !author || !image) {
+    if (!title || !description || !author || !image || !user_blog_id) {
       return res.status(400).send({
         status: false,
         status_code: 400,
@@ -77,6 +91,7 @@ export const createBlog = async (req: Request, res: Response) => {
 
     const blogData = {
       blog_id,
+      user_blog_id,
       title,
       description,
       author,

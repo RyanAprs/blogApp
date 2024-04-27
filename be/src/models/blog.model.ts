@@ -6,6 +6,9 @@ const blogSchema = new mongoose.Schema(
       type: String,
       unique: true,
     },
+    user_blog_id: {
+      type: String,
+    },
     title: {
       type: String,
     },

@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import blogModel from "../models/blog.model";
 import removeImage from "../config/removeImage.config";
+import authModel from "../models/auth.model";
 
 export const getAllBlogs = async (
   req: Request,
@@ -70,6 +71,62 @@ export const getBlogAndUpdate = async (id: string, payload: any) => {
       $set: payload,
     }
   );
+};
+
+export const getBlogByUserId = async (
+  user_blog_id: string,
+  user_id: string,
+  req: Request,
+  res: Response
+) => {
+  try {
+    const idUserBlog = await blogModel.findOne({ user_blog_id: user_blog_id });
+    const idUser = await authModel.findOne({ user_id: user_id });
+
+    if (!idUserBlog || !idUser || idUserBlog.user_blog_id !== user_id) {
+      return res.status(404).json({ message: "User or blog not found" });
+    }
+
+    const currentPage = req.query.page || 1;
+    const perPage = req.query.perPage || 5;
+
+    const count = await blogModel.countDocuments({
+      user_blog_id: user_blog_id,
+    });
+    const totalItems = count;
+
+    const blogs = await blogModel
+      .find({ user_blog_id: user_blog_id })
+      .skip(
+        (parseInt(currentPage.toString()) - 1) * parseInt(perPage.toString())
+      )
+      .limit(parseInt(perPage.toString()));
+
+    if (blogs.length > 0) {
+      return res.status(200).json({
+        status: true,
+        status_code: 200,
+        message: "Get data blogs successfully",
+        data: blogs,
+        total_data: totalItems,
+        per_page: parseInt(perPage.toString()),
+        current_page: parseInt(currentPage.toString()),
+      });
+    } else {
+      return res.status(200).json({
+        status: true,
+        status_code: 200,
+        message: "Get data blogs successfully",
+        data: "No blogs posted",
+        total_data: totalItems,
+        per_page: parseInt(perPage.toString()),
+        current_page: parseInt(currentPage.toString()),
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Internal Server Error" });
+  }
 };
 
 export const getBlogAndDelete = async (id: string) => {

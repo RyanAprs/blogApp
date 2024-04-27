@@ -3,6 +3,7 @@ import {
   createBlog,
   deleteBlog,
   getBlog,
+  getBlogByUser,
   getSearchBlog,
   updateBlog,
 } from "../controllers/blog.controller";
@@ -12,6 +13,7 @@ export const Blogrouter: Router = Router();
 
 Blogrouter.get("/", getBlog);
 Blogrouter.get("/:id", getBlog);
+Blogrouter.get("/:user_id/:user_blog_id", getBlogByUser);
 Blogrouter.get("/search?q=", getSearchBlog);
 Blogrouter.post("/", requireUser, createBlog);
 Blogrouter.put("/:id", requireUser, updateBlog);
