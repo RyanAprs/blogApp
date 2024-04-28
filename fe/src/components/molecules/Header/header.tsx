@@ -15,10 +15,10 @@ const Header: React.FC = () => {
         <Link to="/" className="hover:text-gray-500 transition-all">
           <h1>Home</h1>
         </Link>
-        <Link to="/" className="hover:text-gray-500 transition-all">
+        <Link to="/blog" className="hover:text-gray-500 transition-all">
           <h1>Blogs</h1>
         </Link>
-        <Link to="/" className="hover:text-gray-500 transition-all">
+        <Link to="/contact" className="hover:text-gray-500 transition-all">
           <h1>Contact</h1>
         </Link>
       </nav>
