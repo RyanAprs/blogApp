@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import DropdownMenu from "../dropDown/dropDown";
 
 const Header: React.FC = () => {
   const [user, setUser] = useState<any | null>(null);
@@ -61,23 +62,8 @@ const Header: React.FC = () => {
           <h1>Contact</h1>
         </Link>
       </nav>
-      <div className="flex gap-4">
-        <p>{user.name}</p>
-        {user ? (
-          <button
-            onClick={handleLogout}
-            className="bg-gray-500 hover:bg-gray-600 transition-all text-white font-bold py-2 px-4 rounded flex justify-center items-center"
-          >
-            Logout
-          </button>
-        ) : (
-          <Link
-            to="/login"
-            className="bg-gray-500 hover:bg-gray-600 transition-all text-white font-bold py-2 px-4 rounded flex justify-center items-center"
-          >
-            Login
-          </Link>
-        )}
+      <div>
+        <DropdownMenu handleLogout={handleLogout} user={user} />
       </div>
     </header>
   );
