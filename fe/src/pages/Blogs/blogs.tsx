@@ -30,13 +30,14 @@ const Blogs = () => {
             <Link
               to={`${blog.blog_id}`}
               key={index}
-              className="cursor-pointer bg-slate-500 p-4 border-[3px] border-black rounded"
+              className="shadow-lg cursor-pointer bg-slate-500 p-4  rounded "
             >
               <img
-                className="h-[350px] w-[550px] object-cover border-[1px] border-black rounded"
+                className="h-[350px] w-[550px] object-cover  rounded"
                 src={`http://localhost:3000/${blog.image}`}
                 alt="blog image"
               />
+              <hr className="mt-3" />
               <h1 className="text-2xl">{blog.title}</h1>
               <div className="flex gap-3">
                 <p>{blog.author} </p>-<p>{dateSlice}</p>
