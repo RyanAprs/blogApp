@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
+import { FaUser } from "react-icons/fa";
 
 const DropdownMenu = ({ user, handleLogout }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -26,24 +27,38 @@ const DropdownMenu = ({ user, handleLogout }) => {
   return (
     <div className="relative" ref={dropdownRef}>
       <div className="flex items-center">
-        {user && <p className="mr-2">{user.name}</p>}
-        <button
-          onClick={toggleDropdown}
-          className="bg-gray-500 hover:bg-gray-600 transition-all text-white font-bold py-2 px-4 rounded flex justify-center items-center"
-        >
-          Account
-        </button>
-        {/* {user.image === null ? } */}
+        {user && user.name && <p className="mr-2">{user.name}</p>}
+        {user && user.image !== null ? (
+          <button onClick={toggleDropdown}>
+            <img
+              src={`http://localhost:3000/${user.image}`}
+              alt="user image"
+              className="h-[40px] w-[40px] object-cover rounded-full"
+            />
+          </button>
+        ) : (
+          <button onClick={toggleDropdown} className="cursor-pointer p-3 ">
+            <FaUser className="" />
+          </button>
+        )}
       </div>
       {isOpen && (
         <div className="absolute top-full left-0 mt-2 bg-white border border-gray-300 rounded shadow-lg">
           {user ? (
-            <button
-              onClick={handleLogout}
-              className="block w-full text-left py-2 px-4 text-gray-800 hover:bg-gray-200"
-            >
-              Logout
-            </button>
+            <div>
+              <Link
+                to="/"
+                className="block w-full text-left py-2 px-4 text-gray-800 hover:bg-gray-200"
+              >
+                Profile
+              </Link>
+              <button
+                onClick={handleLogout}
+                className="block w-full text-left py-2 px-4 text-gray-800 hover:bg-gray-200"
+              >
+                Logout
+              </button>
+            </div>
           ) : (
             <Link
               to="/login"

@@ -18,10 +18,7 @@ const profileStorage = multer.diskStorage({
     cb(null, "profileImages/");
   },
   filename: (req, file, cb) => {
-    const ext = path.extname(file.originalname);
-    const fileName = uuidv4() + ext;
-    cb(null, fileName);
+    cb(null, file.originalname); 
   },
 });
-
 export { storage, profileStorage };

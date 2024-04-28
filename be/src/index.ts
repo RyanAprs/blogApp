@@ -17,6 +17,7 @@ const corsOrigin = {
 };
 
 app.use(express.static("uploads"));
+app.use(express.static("profileImages"));
 app.use(cors(corsOrigin));
 app.use((req: Request, res: Response, next: NextFunction) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
