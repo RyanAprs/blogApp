@@ -6,6 +6,7 @@ import Home from "../../pages/Home/home";
 import Blogs from "../../pages/Blogs/blogs";
 import Contact from "../../pages/Contact/contact";
 import DetailBlog from "../../pages/Blogs/detailBlog";
+import Profile from "../../pages/Profile/profile";
 
 const Routing = () => {
   return (
@@ -46,6 +47,15 @@ const Routing = () => {
             <>
               <Header />
               <Contact />
+            </>
+          }
+        />
+        <Route
+          path="/profile/:id"
+          element={
+            <>
+              <Header />
+              <Profile />
             </>
           }
         />

@@ -47,7 +47,7 @@ const DropdownMenu = ({ user, handleLogout }) => {
           {user ? (
             <div>
               <Link
-                to="/"
+                to={`/profile/${user.user_id}`}
                 className="block w-full text-left py-2 px-4 text-gray-800 hover:bg-gray-200"
               >
                 Profile
