@@ -21,7 +21,9 @@ const Login = () => {
       );
       if (response.data.status_code === 200) {
         navigate("/");
-        console.log(response.data.data);
+        const user = response.data.data;
+        document.cookie = `userData=${JSON.stringify(user)}`;
+        console.log(user);
       } else {
         console.log("login gagal");
       }
