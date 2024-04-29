@@ -69,7 +69,7 @@ const Profile = () => {
       <h5 className="text-4xl font-bold">
         <span className="text-color-accent">{name}</span>
       </h5>
-      <p>{bio !== null ? <p className="text-lg">{bio}</p> : null}</p>
+      <p>{bio !== null ? <p className="text-lg">{bio}</p> : null} </p>
       <div className="py-8 flex flex-wrap gap-4">
         {(user && user.user_id !== userId) || user === null ? (
           <Link
