@@ -12,20 +12,27 @@ export const signJWT = (
   });
 };
 
-
 export const verifyJwt = (token: string) => {
-  const decoded: any = jwt.verify(token, CONFIG.jwt_public);
   try {
+    const decoded: any = jwt.verify(token, CONFIG.jwt_public);
     return {
       valid: true,
       expired: false,
       decoded,
     };
   } catch (error: any) {
-    return {
-      valid: false,
-      expired: error.message === "jwt is expired or not eligible to use",
-      decoded: null,
-    };
+    if (error instanceof jwt.TokenExpiredError) {
+      return {
+        valid: false,
+        expired: true,
+        decoded: null,
+      };
+    } else {
+      return {
+        valid: false,
+        expired: false,
+        decoded: null,
+      };
+    }
   }
 };
