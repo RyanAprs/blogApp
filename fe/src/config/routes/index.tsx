@@ -7,6 +7,7 @@ import Blogs from "../../pages/Blogs/blogs";
 import Contact from "../../pages/Contact/contact";
 import DetailBlog from "../../pages/Blogs/detailBlog";
 import Profile from "../../pages/Profile/profile";
+import UpdateProfile from "../../pages/Profile/updateProfile";
 
 const Routing = () => {
   return (
@@ -56,6 +57,15 @@ const Routing = () => {
             <>
               <Header />
               <Profile />
+            </>
+          }
+        />
+        <Route
+          path="/update/:id"
+          element={
+            <>
+              <Header />
+              <UpdateProfile />
             </>
           }
         />
