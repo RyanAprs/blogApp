@@ -51,7 +51,7 @@ const Header: React.FC = () => {
           </h1>
         </Link>
       </div>
-      <nav className="text-lg text-white flex gap-4 font-bold">
+      <nav className="text-lg text-white flex gap-8 font-bold">
         <Link to="/" className="hover:text-gray-500 transition-all">
           <h1>Home</h1>
         </Link>

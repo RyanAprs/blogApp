@@ -4,12 +4,36 @@ import { FaUser } from "react-icons/fa";
 import { Link, useParams } from "react-router-dom";
 
 const Profile = () => {
-  const [email, setEmail] = useState();
   const [userId, setUserId] = useState();
   const [name, setName] = useState();
   const [image, setImage] = useState();
   const [bio, setBio] = useState();
+  const [user, setUser] = useState();
   const { id } = useParams();
+
+  useEffect(() => {
+    const getUserDataFromCookie = () => {
+      const cookieData = document.cookie
+        .split("; ")
+        .find((row) => row.startsWith("userData="));
+
+      if (cookieData) {
+        const userDataString = cookieData.split("=")[1];
+        try {
+          const userData = JSON.parse(decodeURIComponent(userDataString));
+          return userData;
+        } catch (error) {
+          console.error("Error parsing JSON from cookie:", error);
+          return null;
+        }
+      } else {
+        return null;
+      }
+    };
+
+    const userData = getUserDataFromCookie();
+    setUser(userData);
+  }, []);
 
   useEffect(() => {
     getUserDetail();
@@ -21,7 +45,6 @@ const Profile = () => {
         `http://localhost:3000/api/v1/user/${id}`
       );
       setUserId(response.data.data.user_id);
-      setEmail(response.data.data.email);
       setName(response.data.data.name);
       setImage(response.data.data.image);
       setBio(response.data.data.bio);
@@ -48,18 +71,29 @@ const Profile = () => {
       </h5>
       <p>{bio !== null ? <p className="text-lg">{bio}</p> : null}</p>
       <div className="py-8 flex flex-wrap gap-4">
-        <Link
-          to={`/update/${userId}`}
-          className="bg-gray-400 text-color-dark font-bold py-3 px-3 text-lg rounded"
-        >
-          Edit Profile
-        </Link>
-        <Link
-          to=""
-          className="bg-gray-400 text-color-dark font-bold py-3 px-3 text-lg rounded"
-        >
-          My Blogs
-        </Link>
+        {user && user.user_id !== userId ? (
+          <Link
+            to=""
+            className="bg-gray-400 text-color-dark font-bold py-3 px-3 text-lg rounded"
+          >
+            Blog
+          </Link>
+        ) : (
+          <>
+            <Link
+              to={`/update/${userId}`}
+              className="bg-gray-400 text-color-dark font-bold py-3 px-3 text-lg rounded"
+            >
+              Edit Profile
+            </Link>
+            <Link
+              to=""
+              className="bg-gray-400 text-color-dark font-bold py-3 px-3 text-lg rounded"
+            >
+              My Blog
+            </Link>
+          </>
+        )}
       </div>
     </div>
   );
