@@ -33,12 +33,15 @@ const DropdownMenu = ({ user, handleLogout }) => {
             <img
               src={`http://localhost:3000/${user.image}`}
               alt="user image"
-              className="h-[40px] w-[40px] object-cover rounded-full"
+              className="h-[40px] w-[40px] object-cover rounded-full bg-gray-200"
             />
           </button>
         ) : (
-          <button onClick={toggleDropdown} className="cursor-pointer p-3 ">
-            <FaUser className="" />
+          <button
+            onClick={toggleDropdown}
+            className="cursor-pointer p-3 bg-gray-200 rounded-full"
+          >
+            <FaUser className="text-black " />
           </button>
         )}
       </div>

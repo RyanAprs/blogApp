@@ -28,7 +28,7 @@ const Blogs = () => {
           const dateSlice = blog.createdAt.slice(0, 10);
           return (
             <Link
-              to={`${blog.blog_id}`}
+              to={`detail/${blog.blog_id}`}
               key={index}
               className="shadow-lg cursor-pointer bg-slate-500 p-4  rounded "
             >

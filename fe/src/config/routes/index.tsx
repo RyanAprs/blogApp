@@ -8,6 +8,7 @@ import Contact from "../../pages/Contact/contact";
 import DetailBlog from "../../pages/Blogs/detailBlog";
 import Profile from "../../pages/Profile/profile";
 import UpdateProfile from "../../pages/Profile/updateProfile";
+import BlogUser from "../../pages/Profile/blogUser";
 
 const RouteData = [
   {
@@ -19,7 +20,7 @@ const RouteData = [
     element: <Blogs />,
   },
   {
-    path: "/blog/:id",
+    path: "/blog/detail/:id",
     element: <DetailBlog />,
   },
   {
@@ -34,6 +35,10 @@ const RouteData = [
     path: "/update/:id",
     element: <UpdateProfile />,
   },
+  {
+    path: "/profile/:id/blog/:id",
+    element: <BlogUser />,
+  },
 ];
 
 const Routing = () => {
@@ -42,9 +47,10 @@ const Routing = () => {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        {RouteData.map((route) => {
+        {RouteData.map((route, index) => {
           return (
             <Route
+              key={index}
               path={route.path}
               element={
                 <>

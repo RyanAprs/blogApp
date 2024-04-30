@@ -59,7 +59,7 @@ const Profile = () => {
         <img
           src={`http://localhost:3000/${image}`}
           alt="profile picture"
-          className="w-[250px] h-[250px] shadow-lg object-cover mt-3 border-[1px] border-black  rounded-full"
+          className="w-[250px] h-[250px] bg-white shadow-lg object-cover mt-3  border-black  rounded-full"
         />
       ) : (
         <div className=" relative w-[250px] h-[250px] shadow-lg object-cover mt-3 border-[1px] border-black rounded-full flex justify-center items-center">
@@ -87,7 +87,7 @@ const Profile = () => {
               Edit Profile
             </Link>
             <Link
-              to=""
+              to={`/profile/${userId}/blog/${user && user.user_id}`}
               className="bg-gray-400 text-color-dark font-bold py-3 px-3 text-lg rounded"
             >
               My Blog
