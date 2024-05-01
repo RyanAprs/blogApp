@@ -9,6 +9,7 @@ import DetailBlog from "../../pages/Blogs/detailBlog";
 import Profile from "../../pages/Profile/profile";
 import UpdateProfile from "../../pages/Profile/updateProfile";
 import BlogUser from "../../pages/Profile/blogUser";
+import CreateBlog from "../../pages/Blogs/createBlog";
 
 const RouteData = [
   {
@@ -18,6 +19,10 @@ const RouteData = [
   {
     path: "/blog",
     element: <Blogs />,
+  },
+  {
+    path: "/blog/create",
+    element: <CreateBlog />,
   },
   {
     path: "/blog/detail/:id",

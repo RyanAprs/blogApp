@@ -51,8 +51,13 @@ const BlogUser = () => {
   };
 
   return (
-    <>
-      <div className="grid md:grid-cols-2 grid-cols-1 gap-4 p-4 text-white items-center justify-center">
+    <div className="p-4 flex justify-end flex-col items-end">
+      {user && user.user_id !== id ? null : (
+        <Link to="/blog/create" className="bg-gray-500 p-2 rounded">
+          Crate Blog
+        </Link>
+      )}
+      <div className="grid md:grid-cols-2 grid-cols-1 gap-4  text-white items-center justify-center">
         {blogs?.map((blog, index) => {
           const dateSlice = blog.createdAt.slice(0, 10);
           return (
@@ -75,7 +80,7 @@ const BlogUser = () => {
           );
         })}
       </div>
-    </>
+    </div>
   );
 };
 
