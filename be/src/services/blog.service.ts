@@ -53,7 +53,6 @@ export const getAllBlogs = async (
 export const getBlogById = async (id: string) => {
   return await blogModel.findOne({ blog_id: id });
 };
-
 export const getBlogByTitle = async (q: string) => {
   return await blogModel.findOne({ title: q });
 };
@@ -83,45 +82,82 @@ export const getBlogByUserId = async (
     const idUserBlog = await blogModel.findOne({ user_blog_id: user_blog_id });
     const idUser = await authModel.findOne({ user_id: user_id });
 
-    if (!idUserBlog || !idUser || idUserBlog.user_blog_id !== user_id) {
-      return res.status(404).json({ message: "User or blog not found" });
-    }
+    // Jika user_id dan user_blog_id tidak sama, ambil blog berdasarkan user_blog_id saja
+    if (idUser && idUserBlog && idUserBlog.user_blog_id === user_blog_id) {
+      const currentPage = req.query.page || 1;
+      const perPage = req.query.perPage || 5;
 
-    const currentPage = req.query.page || 1;
-    const perPage = req.query.perPage || 5;
-
-    const count = await blogModel.countDocuments({
-      user_blog_id: user_blog_id,
-    });
-    const totalItems = count;
-
-    const blogs = await blogModel
-      .find({ user_blog_id: user_blog_id })
-      .skip(
-        (parseInt(currentPage.toString()) - 1) * parseInt(perPage.toString())
-      )
-      .limit(parseInt(perPage.toString()));
-
-    if (blogs.length > 0) {
-      return res.status(200).json({
-        status: true,
-        status_code: 200,
-        message: "Get data blogs successfully",
-        data: blogs,
-        total_data: totalItems,
-        per_page: parseInt(perPage.toString()),
-        current_page: parseInt(currentPage.toString()),
+      const count = await blogModel.countDocuments({
+        user_blog_id: user_blog_id,
       });
+      const totalItems = count;
+
+      const blogs = await blogModel
+        .find({ user_blog_id: user_blog_id })
+        .skip(
+          (parseInt(currentPage.toString()) - 1) * parseInt(perPage.toString())
+        )
+        .limit(parseInt(perPage.toString()));
+
+      if (blogs.length > 0) {
+        return res.status(200).json({
+          status: true,
+          status_code: 200,
+          message: "Get data blogs successfully",
+          data: blogs,
+          total_data: totalItems,
+          per_page: parseInt(perPage.toString()),
+          current_page: parseInt(currentPage.toString()),
+        });
+      } else {
+        return res.status(200).json({
+          status: true,
+          status_code: 200,
+          message: "Get data blogs successfully",
+          data: "No blogs posted",
+          total_data: totalItems,
+          per_page: parseInt(perPage.toString()),
+          current_page: parseInt(currentPage.toString()),
+        });
+      }
     } else {
-      return res.status(200).json({
-        status: true,
-        status_code: 200,
-        message: "Get data blogs successfully",
-        data: "No blogs posted",
-        total_data: totalItems,
-        per_page: parseInt(perPage.toString()),
-        current_page: parseInt(currentPage.toString()),
+      // Jika user_id dan user_blog_id tidak sama, tambahkan fitur API untuk mengambil berdasarkan user_blog_id saja
+      const currentPage = req.query.page || 1;
+      const perPage = req.query.perPage || 5;
+
+      const count = await blogModel.countDocuments({
+        user_blog_id: user_blog_id,
       });
+      const totalItems = count;
+
+      const blogs = await blogModel
+        .find({ user_blog_id: user_blog_id })
+        .skip(
+          (parseInt(currentPage.toString()) - 1) * parseInt(perPage.toString())
+        )
+        .limit(parseInt(perPage.toString()));
+
+      if (blogs.length > 0) {
+        return res.status(200).json({
+          status: true,
+          status_code: 200,
+          message: "Get data blogs successfully",
+          data: blogs,
+          total_data: totalItems,
+          per_page: parseInt(perPage.toString()),
+          current_page: parseInt(currentPage.toString()),
+        });
+      } else {
+        return res.status(200).json({
+          status: true,
+          status_code: 200,
+          message: "Get data blogs successfully",
+          data: "No blogs posted",
+          total_data: totalItems,
+          per_page: parseInt(perPage.toString()),
+          current_page: parseInt(currentPage.toString()),
+        });
+      }
     }
   } catch (error) {
     console.log(error);
