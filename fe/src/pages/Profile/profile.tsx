@@ -73,7 +73,7 @@ const Profile = () => {
       <div className="py-8 flex flex-wrap gap-4">
         {(user && user.user_id !== userId) || user === null ? (
           <Link
-            to=""
+            to={`/profile/${userId}/blog/${id}`}
             className="bg-gray-400 text-color-dark font-bold py-3 px-3 text-lg rounded"
           >
             Blog
