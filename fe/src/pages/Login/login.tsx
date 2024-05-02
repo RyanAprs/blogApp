@@ -22,7 +22,13 @@ const Login = () => {
       if (response.data.status_code === 200) {
         navigate("/");
         const user = response.data.data;
-        document.cookie = `userData=${JSON.stringify(user)}`;
+
+        const expirationDate = new Date();
+        expirationDate.setDate(expirationDate.getDate() + 1); 
+        document.cookie = `userData=${JSON.stringify(
+          user
+        )}; expires=${expirationDate.toUTCString()}`;
+
         console.log(user);
       } else {
         console.log("login gagal");

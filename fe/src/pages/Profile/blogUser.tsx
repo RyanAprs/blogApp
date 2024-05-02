@@ -53,7 +53,7 @@ const BlogUser = () => {
   return (
     <div className="p-4 flex justify-end flex-col items-end">
       {user && user.user_id !== id ? null : (
-        <Link to="/blog/create" className="bg-gray-500 p-2 rounded">
+        <Link to="/blog/create" className="bg-gray-500 p-2 rounded mb-4">
           Crate Blog
         </Link>
       )}

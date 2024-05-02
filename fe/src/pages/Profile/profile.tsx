@@ -62,7 +62,7 @@ const Profile = () => {
           className="w-[250px] h-[250px] bg-white shadow-lg object-cover mt-3  border-black  rounded-full"
         />
       ) : (
-        <div className=" relative w-[250px] h-[250px] shadow-lg object-cover mt-3 border-[1px] border-black rounded-full flex justify-center items-center">
+        <div className=" relative w-[250px] h-[250px] shadow-lg object-cover mt-3  border-black rounded-full flex justify-center items-center">
           <FaUser size={150} className="absolute" />
         </div>
       )}
