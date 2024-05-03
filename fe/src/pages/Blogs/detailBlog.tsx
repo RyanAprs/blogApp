@@ -65,57 +65,51 @@ const DetailBlog = () => {
   };
 
   return (
-    <>
-      <div>
-        <div className="p-8">
-          <img
-            className="h-[420px] w-full object-cover border-[1px] border-black rounded"
-            src={`http://localhost:3000/${blogImage}`}
-            alt="blog image"
-          />
-          <div className="flex gap-4  w-max rounded-full py-2 justify-center items-center">
-            <h1 className="sm:text-4xl md:text-7xl text-2xl font-bold">
-              {title}
-            </h1>
+    <div className="flex flex-col p-2">
+      <div className="p-8">
+        <img
+          className="h-[420px] w-full object-cover border-[1px] border-black rounded"
+          src={`http://localhost:3000/${blogImage}`}
+          alt="blog image"
+        />
+        <h1 className="md:text-3xl text-xl font-bold">{title}</h1>
+        <Link
+          to={`/profile/${userBlogId}`}
+          className="flex gap-3 mb-3 items-center py-2 w-max"
+        >
+          <div className="flex gap-1 mb-3 items-center">
+            <p className="rounded-full bg-slate-300 p-3">
+              <FaUser />
+            </p>
+            <p className="text-lg font-bold uppercase">{author} </p>
           </div>
-          <Link
-            to={`/profile/${userBlogId}`}
-            className="flex gap-3 mb-3 items-center py-2 w-max"
-          >
-            <div className="flex gap-1 mb-3 items-center">
-              <p className="rounded-full bg-slate-300 p-3">
-                <FaUser />
-              </p>
-              <p className="text-xl font-bold uppercase">{author} </p>
-            </div>
-            <div className="flex gap-3 mb-3 items-center">
-              <p>-</p>
-              <p>{date}</p>
-            </div>
-          </Link>{" "}
-          <p className="text-lg">{description}</p>
-        </div>
-        {(user && user.user_id !== userBlogId) || userBlogId === null ? null : (
-          <div className="flex justify-center items-center gap-4 p-4">
-            <Link
-              to=""
-              onClick={handleDelete}
-              className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition-colors duration-300 flex gap-2 items-center"
-            >
-              <FaTrash />
-              Delete
-            </Link>
-            <Link
-              to={`/blog/update/${id}`}
-              className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition-colors duration-300 flex gap-2 items-center"
-            >
-              <FaPen />
-              Update
-            </Link>
+          <div className="flex gap-3 mb-3 items-center">
+            <p>-</p>
+            <p>{date}</p>
           </div>
-        )}
+        </Link>{" "}
+        <p className="text-md">{description}</p>
       </div>
-    </>
+      {(user && user.user_id !== userBlogId) || userBlogId === null ? null : (
+        <div className="flex justify-center items-center gap-4 p-4">
+          <Link
+            to=""
+            onClick={handleDelete}
+            className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition-colors duration-300 flex gap-2 items-center"
+          >
+            <FaTrash />
+            Delete
+          </Link>
+          <Link
+            to={`/blog/update/${id}`}
+            className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition-colors duration-300 flex gap-2 items-center"
+          >
+            <FaPen />
+            Update
+          </Link>
+        </div>
+      )}
+    </div>
   );
 };
 
