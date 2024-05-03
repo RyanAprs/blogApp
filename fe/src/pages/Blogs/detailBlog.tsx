@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { FaUser } from "react-icons/fa";
+import { FaPen, FaTrash, FaUser } from "react-icons/fa";
 import { Link, useParams } from "react-router-dom";
 
 const DetailBlog = () => {
@@ -10,11 +10,36 @@ const DetailBlog = () => {
   const [userBlogId, setUserBlogId] = useState();
   const [description, setDescription] = useState();
   const [date, setDate] = useState();
+  const [user, setUser] = useState();
   const { id } = useParams();
 
   useEffect(() => {
     getBlogById();
   });
+
+  useEffect(() => {
+    const getUserDataFromCookie = () => {
+      const cookieData = document.cookie
+        .split("; ")
+        .find((row) => row.startsWith("userData="));
+
+      if (cookieData) {
+        const userDataString = cookieData.split("=")[1];
+        try {
+          const userData = JSON.parse(decodeURIComponent(userDataString));
+          return userData;
+        } catch (error) {
+          console.error("Error parsing JSON from cookie:", error);
+          return null;
+        }
+      } else {
+        return null;
+      }
+    };
+
+    const userData = getUserDataFromCookie();
+    setUser(userData);
+  }, []);
 
   const getBlogById = async () => {
     try {
@@ -34,6 +59,15 @@ const DetailBlog = () => {
       console.log(error);
     }
   };
+
+  const handleUpdate = () => {
+    console.log(`update ${id}, ${title}`);
+  };
+
+  const handleDelete = () => {
+    console.log(`delete ${id}, ${title}`);
+  };
+
   return (
     <>
       <div>
@@ -44,7 +78,9 @@ const DetailBlog = () => {
             alt="blog image"
           />
           <div className="flex gap-4  w-max rounded-full py-2 justify-center items-center">
-            <h1 className="text-7xl font-bold">{title}</h1>
+            <h1 className="sm:text-4xl md:text-7xl text-2xl font-bold">
+              {title}
+            </h1>
           </div>
           <Link
             to={`/profile/${userBlogId}`}
@@ -63,6 +99,26 @@ const DetailBlog = () => {
           </Link>{" "}
           <p className="text-lg">{description}</p>
         </div>
+        {(user && user.user_id !== userBlogId) || userBlogId === null ? null : (
+          <div className="flex justify-center items-center gap-4 p-4">
+            <Link
+              to=""
+              onClick={handleDelete}
+              className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition-colors duration-300 flex gap-2 items-center"
+            >
+              <FaTrash />
+              Delete
+            </Link>
+            <Link
+              to=""
+              onClick={handleUpdate}
+              className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition-colors duration-300 flex gap-2 items-center"
+            >
+              <FaPen />
+              Update
+            </Link>
+          </div>
+        )}
       </div>
     </>
   );

@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { FaSave } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
 const CreateBlog = () => {
@@ -103,8 +104,9 @@ const CreateBlog = () => {
           />
           <button
             onClick={handleCreate}
-            className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition-colors duration-300"
+            className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition-colors duration-300 flex gap-2 justify-center items-center"
           >
+            <FaSave />
             Create
           </button>
         </div>
