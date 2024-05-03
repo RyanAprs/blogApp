@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { FaUser } from "react-icons/fa";
 import { Link, useParams } from "react-router-dom";
 
 const DetailBlog = () => {
@@ -42,14 +43,25 @@ const DetailBlog = () => {
             src={`http://localhost:3000/${image}`}
             alt="blog image"
           />
-          <h1>{title}</h1>
-          <div className="flex gap-4">
-            <Link to={`/profile/${userBlogId}`} className="flex gap-3">
-              <p>{author} </p>
-            </Link>{" "}
-            <p>{date}</p>
+          <div className="flex gap-4  w-max rounded-full py-2 justify-center items-center">
+            <h1 className="text-7xl font-bold">{title}</h1>
           </div>
-          <p>{description}</p>
+          <Link
+            to={`/profile/${userBlogId}`}
+            className="flex gap-3 mb-3 items-center py-2 w-max"
+          >
+            <div className="flex gap-1 mb-3 items-center">
+              <p className="rounded-full bg-slate-300 p-3">
+                <FaUser className=" " />
+              </p>
+              <p className="text-xl font-bold uppercase">{author} </p>
+            </div>
+            <div className="flex gap-3 mb-3 items-center">
+              <p>-</p>
+              <p>{date}</p>
+            </div>
+          </Link>{" "}
+          <p className="text-lg">{description}</p>
         </div>
       </div>
     </>

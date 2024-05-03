@@ -17,4 +17,4 @@ Blogrouter.get("/:user_id/:user_blog_id", getBlogByUser);
 Blogrouter.get("/search?q=", getSearchBlog);
 Blogrouter.post("/", createBlog);
 Blogrouter.put("/:id", requireUser, updateBlog);
-Blogrouter.delete("/:id", requireUser, deleteBlog);
+Blogrouter.delete("/:id", deleteBlog);
