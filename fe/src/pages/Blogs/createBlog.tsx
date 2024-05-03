@@ -6,7 +6,8 @@ import { useNavigate } from "react-router-dom";
 const CreateBlog = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [image, setImage] = useState(null); // Change to null instead of undefined
+  const [image, setImage] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
   const [author, setAuthor] = useState("");
   const [user_blog_id, setUser_blog_id] = useState("");
   const [error, setError] = useState("");
@@ -59,7 +60,6 @@ const CreateBlog = () => {
       );
 
       if (response.data.status_code === 200) {
-        // Corrected the status check
         navigate("/blog");
         console.log(response.data.data);
         console.log("create blog berhasil");
@@ -77,6 +77,12 @@ const CreateBlog = () => {
     }
   };
 
+  const onImageUpload = (e) => {
+    const file = e.target.files[0];
+    setImage(file);
+    setImagePreview(URL.createObjectURL(file));
+  };
+
   return (
     <div className="flex items-center justify-center">
       <div className="min-h-screen w-full flex flex-col justify-center p-8 rounded shadow-lg gap-10">
@@ -89,18 +95,24 @@ const CreateBlog = () => {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
           />
-          <input
-            type="text"
+          <textarea
             placeholder="Description"
-            className="border-2 border-gray-300 rounded p-4 mb-4 w-full"
+            className="border-2 border-gray-300 rounded p-4 mb-4 w-full h-[150px]"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           />
+          {imagePreview && (
+            <img
+              src={imagePreview}
+              alt="Image Preview"
+              className="mb-4 max-w-[300px]"
+            />
+          )}
           <input
             type="file"
             placeholder="Image"
             className="border-2 border-gray-300 rounded p-4 mb-4 w-full"
-            onChange={(e) => setImage(e.target.files[0])} // Changed to set the file object
+            onChange={onImageUpload}
           />
           <button
             onClick={handleCreate}
