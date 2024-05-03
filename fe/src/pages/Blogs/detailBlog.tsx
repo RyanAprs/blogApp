@@ -6,7 +6,7 @@ import { Link, useParams } from "react-router-dom";
 const DetailBlog = () => {
   const [title, setTitle] = useState();
   const [author, setAuthor] = useState();
-  const [image, setImage] = useState();
+  const [blogImage, setBlogImage] = useState();
   const [userBlogId, setUserBlogId] = useState();
   const [description, setDescription] = useState();
   const [date, setDate] = useState();
@@ -49,7 +49,7 @@ const DetailBlog = () => {
       setTitle(response.data.data.title);
       setUserBlogId(response.data.data.user_blog_id);
       setAuthor(response.data.data.author);
-      setImage(response.data.data.image);
+      setBlogImage(response.data.data.image);
       setDescription(response.data.data.description);
 
       const dateCreatedBlog = response.data.data.createdAt;
@@ -74,7 +74,7 @@ const DetailBlog = () => {
         <div className="p-8">
           <img
             className="h-[420px] w-full object-cover border-[1px] border-black rounded"
-            src={`http://localhost:3000/${image}`}
+            src={`http://localhost:3000/${blogImage}`}
             alt="blog image"
           />
           <div className="flex gap-4  w-max rounded-full py-2 justify-center items-center">
@@ -88,7 +88,7 @@ const DetailBlog = () => {
           >
             <div className="flex gap-1 mb-3 items-center">
               <p className="rounded-full bg-slate-300 p-3">
-                <FaUser className=" " />
+                <FaUser />
               </p>
               <p className="text-xl font-bold uppercase">{author} </p>
             </div>
