@@ -13,9 +13,27 @@ import { uploadAsync } from "../config/upload.config";
 
 export const getBlog = async (req: Request, res: Response) => {
   const id = req.params.id;
+  const q = req.params.q;
 
   if (id) {
     const blog = await getBlogById(id);
+    if (blog) {
+      return res.status(200).send({
+        status: true,
+        status_code: 200,
+        message: "Get detail data blog successfully",
+        data: blog,
+      });
+    } else {
+      return res.status(404).send({
+        status: false,
+        status_code: 404,
+        message: "Data not found",
+        data: {},
+      });
+    }
+  } else if (q) {
+    const blog = await getBlogByTitle(q);
     if (blog) {
       return res.status(200).send({
         status: true,
@@ -60,7 +78,7 @@ export const getSearchBlog = async (req: Request, res: Response) => {
     return res.status(200).send({
       status: true,
       status_code: 200,
-      message: "Get data blog successfully",
+      message: "Get data blog ",
       data: blog,
     });
   } else {

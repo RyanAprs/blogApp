@@ -53,8 +53,9 @@ export const getAllBlogs = async (
 export const getBlogById = async (id: string) => {
   return await blogModel.findOne({ blog_id: id });
 };
+
 export const getBlogByTitle = async (q: string) => {
-  return await blogModel.findOne({ title: q });
+  return await blogModel.findOne({ title: { $regex: new RegExp(q, "i") } });
 };
 
 export const insertBlog = async (payload: any) => {
