@@ -10,6 +10,7 @@ import Profile from "../../pages/Profile/profile";
 import UpdateProfile from "../../pages/Profile/updateProfile";
 import BlogUser from "../../pages/Profile/blogUser";
 import CreateBlog from "../../pages/Blogs/createBlog";
+import UpdateBlog from "../../pages/Blogs/updateBlog";
 
 const RouteData = [
   {
@@ -27,6 +28,10 @@ const RouteData = [
   {
     path: "/blog/detail/:id",
     element: <DetailBlog />,
+  },
+  {
+    path: "/blog/update/:id",
+    element: <UpdateBlog />,
   },
   {
     path: "/contact",

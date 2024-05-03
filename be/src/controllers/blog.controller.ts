@@ -119,10 +119,10 @@ export const updateBlog = async (req: Request, res: Response) => {
     await uploadAsync(req, res);
 
     const id = req.params.id;
-    const { title, description, author } = req.body;
+    const { title, description, author, user_blog_id } = req.body;
     const image = req.file ? req.file.filename : null;
 
-    if (!title || !description || !author || !image) {
+    if (!title || !description || !author || !image || !user_blog_id) {
       return res.status(400).send({
         status: false,
         status_code: 400,
@@ -131,6 +131,7 @@ export const updateBlog = async (req: Request, res: Response) => {
     }
 
     const blogData = {
+      user_blog_id,
       title,
       description,
       author,

@@ -60,10 +60,6 @@ const DetailBlog = () => {
     }
   };
 
-  const handleUpdate = () => {
-    console.log(`update ${id}, ${title}`);
-  };
-
   const handleDelete = () => {
     console.log(`delete ${id}, ${title}`);
   };
@@ -110,8 +106,7 @@ const DetailBlog = () => {
               Delete
             </Link>
             <Link
-              to=""
-              onClick={handleUpdate}
+              to={`/blog/update/${id}`}
               className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition-colors duration-300 flex gap-2 items-center"
             >
               <FaPen />
