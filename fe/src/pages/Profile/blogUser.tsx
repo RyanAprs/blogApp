@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { FaUser } from "react-icons/fa";
 import { Link, useParams } from "react-router-dom";
 
 const BlogUser = () => {
@@ -57,24 +58,47 @@ const BlogUser = () => {
           Crate Blog
         </Link>
       )}
-      <div className="grid md:grid-cols-2 grid-cols-1 gap-4  text-white items-center justify-center">
+      <div className="grid md:grid-cols-2 grid-cols-1 gap-4  text-black items-center justify-center">
         {blogs?.map((blog, index) => {
           const dateSlice = blog.createdAt.slice(0, 10);
+          const descLength = blog.description.length;
+          console.log(descLength);
+          const truncatedDesc =
+            descLength > 100
+              ? `${blog.description.slice(0, 100)}...`
+              : blog.description;
+          const showReadMore = descLength > 100;
+
           return (
             <Link
               to={`/blog/detail/${blog.blog_id}`}
               key={index}
-              className="shadow-lg cursor-pointer bg-slate-500 p-4  rounded "
+              className="shadow-lg cursor-pointer bg-gray-400 p-4 flex flex-col items-start rounded"
             >
               <img
-                className="h-[350px] w-[550px] object-cover  rounded"
+                className="h-[350px] w-full object-cover rounded"
                 src={`http://localhost:3000/${blog.image}`}
                 alt="blog image"
               />
               <hr className="mt-3" />
-              <h1 className="text-2xl">{blog.title}</h1>
-              <div className="flex gap-3">
-                <p>{blog.author} </p>-<p>{dateSlice}</p>
+              <div className="">
+                <h1 className="text-2xl uppercase mb-2 max-w-[90%]">
+                  {blog.title}
+                </h1>
+              </div>
+              <div className="flex gap-2 items-center">
+                <p className="rounded-full bg-slate-300 p-2">
+                  <FaUser className="text-black" />
+                </p>
+                <p>{blog.author}</p>-<p>{dateSlice}</p>
+              </div>
+              <div>
+                <p>{truncatedDesc}</p>
+                {showReadMore && (
+                  <span className="text-slate-100 cursor-pointer text-sm underline">
+                    ...read more
+                  </span>
+                )}
               </div>
             </Link>
           );

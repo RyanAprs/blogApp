@@ -62,14 +62,6 @@ const Header: React.FC = () => {
           <h1>Contact</h1>
         </Link>
       </nav>
-      <div className="flex items-center justify-center border border-gray-300 rounded">
-        <input
-          type="text"
-          placeholder="Search blog..."
-          className="border-none p-2 w-full focus:outline-none text-black"
-          // onChange={}
-        />
-      </div>
       <div>
         <DropdownMenu handleLogout={handleLogout} user={user} />
       </div>
