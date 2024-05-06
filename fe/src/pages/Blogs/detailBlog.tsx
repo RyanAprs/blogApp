@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { FaPen, FaTrash, FaUser } from "react-icons/fa";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import BackButton from "../../components/molecules/backButton/backButton";
 
 const DetailBlog = () => {
   const [title, setTitle] = useState();
@@ -62,33 +63,34 @@ const DetailBlog = () => {
     }
   };
 
-const handleDelete = async () => {
-  try {
-    const response = await axios.delete(
-      `http://localhost:3000/api/v1/blog/${id}`
-    );
-    if (response.status === 200) {
-      // Ubah dari response.status_code menjadi response.status
-      navigate("/blog");
-      console.log("delete blog berhasil");
-    } else {
-      console.log("delete blog gagal");
+  const handleDelete = async () => {
+    try {
+      const response = await axios.delete(
+        `http://localhost:3000/api/v1/blog/${id}`
+      );
+      if (response.status === 200) {
+        navigate("/blog");
+        console.log("delete blog berhasil");
+      } else {
+        console.log("delete blog gagal");
+      }
+    } catch (error) {
+      if (error.response) {
+        setError(error.response.data.message);
+      } else if (error.request) {
+        console.log("No response received from server:", error.request);
+      } else {
+        console.log("Request error:", error.message);
+      }
     }
-  } catch (error) {
-    if (error.response) {
-      setError(error.response.data.message);
-    } else if (error.request) {
-      console.log("No response received from server:", error.request);
-    } else {
-      console.log("Request error:", error.message);
-    }
-  }
-};
-
+  };
 
   return (
     <div className="flex flex-col p-2">
-      <div className="p-8">
+      <div className="flex p-4">
+        <BackButton path="/blog" />
+      </div>
+      <div className="px-4 ">
         <img
           className="h-[420px] w-full object-cover border-[1px] border-black rounded"
           src={`http://localhost:3000/${blogImage}`}

@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { FaUser } from "react-icons/fa";
+import { FaArrowLeft, FaUser } from "react-icons/fa";
 import { Link, useParams } from "react-router-dom";
 import BackButton from "../../components/molecules/backButton/backButton";
 
@@ -36,7 +36,10 @@ const BlogUser = () => {
   useEffect(() => {
     if (user && user.user_id) {
       getBlogByUserId();
-    }
+    }<button className="bg-gray-500 p-2 rounded mb-4 flex justify-center items-center gap-2 ">
+      <FaArrowLeft />
+      Back
+    </button>;
   }, [user, id]);
 
   const getBlogByUserId = async () => {
