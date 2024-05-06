@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { FaSave } from "react-icons/fa";
 import { useNavigate, useParams } from "react-router-dom";
+import BackButton from "../../components/molecules/backButton/backButton";
 
 const UpdateBlog = () => {
   const [title, setTitle] = useState("");
@@ -47,9 +48,10 @@ const UpdateBlog = () => {
         const response = await axios.get(
           `http://localhost:3000/api/v1/blog/${id}`
         );
-        console.log(response.data.data);
         setTitle(response.data.data.title);
         setDescription(response.data.data.description);
+        setImage(response.data.data.image);
+        localStorage.setItem("image", response.data.data.image);
       } catch (error) {
         console.log(error);
       }
@@ -58,6 +60,8 @@ const UpdateBlog = () => {
     getBlogById();
   }, [id]);
 
+  const imagePrevious = localStorage.getItem("image");
+
   const handleUpdate = async () => {
     try {
       const formData = new FormData();
@@ -65,16 +69,17 @@ const UpdateBlog = () => {
       formData.append("description", description);
       formData.append("author", author);
       formData.append("user_blog_id", user_blog_id);
+
       if (image) {
         formData.append("image", image);
+      } else {
+        formData.append("image", imagePrevious);
       }
 
       const response = await axios.put(
         `http://localhost:3000/api/v1/blog/${id}`,
         formData
       );
-
-      console.log(response.data);
       if (response.data.status_code === 200) {
         navigate(`/blog/detail/${id}`);
         console.log(response.data.data);
@@ -124,19 +129,29 @@ const UpdateBlog = () => {
               className="mb-4 max-w-[300px]"
             />
           )}
+          {!imagePreview && (
+            <img
+              src={`http://localhost:3000/${image}`}
+              alt="Image Preview"
+              className="mb-4 max-w-[300px]"
+            />
+          )}
           <input
             type="file"
             placeholder="Image"
             className="border-2 border-gray-300 rounded p-4 mb-4 w-full"
             onChange={onImageUpload}
           />
-          <button
-            onClick={handleUpdate}
-            className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition-colors duration-300 flex gap-2 justify-center items-center"
-          >
-            <FaSave />
-            Update
-          </button>
+          <div className="flex gap-4">
+            <BackButton path={`/blog/detail/${id}`} />
+            <button
+              onClick={handleUpdate}
+              className="bg-gray-500 p-2 rounded mb-4 flex justify-center items-center gap-2"
+            >
+              <FaSave />
+              Update
+            </button>
+          </div>
         </div>
       </div>
     </div>

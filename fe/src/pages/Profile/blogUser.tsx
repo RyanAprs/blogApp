@@ -48,9 +48,6 @@ const BlogUser = () => {
       const response = await axios.get(
         `http://localhost:3000/api/v1/blog/${id}/${id}`
       );
-
-      console.log(id);
-
       const blogs = response.data.data;
       setBlogs(blogs);
     } catch (error) {

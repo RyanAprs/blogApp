@@ -12,6 +12,7 @@ const DetailBlog = () => {
   const [description, setDescription] = useState();
   const [date, setDate] = useState();
   const [user, setUser] = useState();
+  const [showModal, setShowModal] = useState(false);
   const { id } = useParams();
 
   const navigate = useNavigate();
@@ -63,25 +64,26 @@ const DetailBlog = () => {
   };
 
   const handleDelete = async () => {
+    setShowModal(true);
+  };
+
+  const confirmDelete = async () => {
     try {
       const response = await axios.delete(
         `http://localhost:3000/api/v1/blog/${id}`
       );
       if (response.status === 200) {
         navigate("/blog");
-        console.log("delete blog berhasil");
-      } else {
-        console.log("delete blog gagal");
       }
     } catch (error) {
-      if (error.response) {
-        setError(error.response.data.message);
-      } else if (error.request) {
-        console.log("No response received from server:", error.request);
-      } else {
-        console.log("Request error:", error.message);
-      }
+      console.log("Request error:", error.message);
+    } finally {
+      setShowModal(false);
     }
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
   };
 
   return (
@@ -130,6 +132,27 @@ const DetailBlog = () => {
             <FaPen />
             Update
           </Link>
+        </div>
+      )}
+      {showModal && (
+        <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center">
+          <div className="bg-white p-6 rounded-lg shadow-lg">
+            <p>Are you sure you want to delete this blog?</p>
+            <div className="flex justify-center mt-4">
+              <button
+                onClick={confirmDelete}
+                className="bg-red-500 text-white px-4 py-2 rounded mr-2 hover:bg-red-600 transition-colors duration-300"
+              >
+                Yes
+              </button>
+              <button
+                onClick={closeModal}
+                className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition-colors duration-300"
+              >
+                No
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </div>
