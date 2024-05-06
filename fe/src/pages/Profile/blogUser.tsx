@@ -2,10 +2,11 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { FaUser } from "react-icons/fa";
 import { Link, useParams } from "react-router-dom";
+import BackButton from "../../components/molecules/backButton/backButton";
 
 const BlogUser = () => {
   const [user, setUser] = useState();
-  const [blogs, setBlogs] = useState();
+  const [blogs, setBlogs] = useState([]);
   const { id } = useParams();
 
   useEffect(() => {
@@ -52,57 +53,68 @@ const BlogUser = () => {
   };
 
   return (
-    <div className="p-4 flex justify-end flex-col items-end">
-      {user && user.user_id !== id ? null : (
-        <Link to="/blog/create" className="bg-gray-500 p-2 rounded mb-4">
-          Crate Blog
-        </Link>
-      )}
+    <div className="p-4 flex flex-col">
+      <div className="flex  justify-between">
+        <BackButton path={`/profile/${id}`} />
+        {user && user.user_id !== id ? null : (
+          <Link
+            to="/blog/create"
+            className="bg-gray-500 p-2 rounded mb-4 flex items-center"
+          >
+            <h1>Create Blog</h1>
+          </Link>
+        )}
+      </div>
       <div className="grid md:grid-cols-2 grid-cols-1 gap-4  text-black items-center justify-center">
-        {blogs?.map((blog, index) => {
-          const dateSlice = blog.createdAt.slice(0, 10);
-          const descLength = blog.description.length;
-          console.log(descLength);
-          const truncatedDesc =
-            descLength > 100
-              ? `${blog.description.slice(0, 100)}...`
-              : blog.description;
-          const showReadMore = descLength > 100;
+        {Array.isArray(blogs) && blogs.length > 0 ? (
+          blogs.map((blog, index) => {
+            const dateSlice = blog.createdAt.slice(0, 10);
+            const descLength = blog.description.length;
+            const truncatedDesc =
+              descLength > 100
+                ? `${blog.description.slice(0, 100)}...`
+                : blog.description;
+            const showReadMore = descLength > 100;
 
-          return (
-            <Link
-              to={`/blog/detail/${blog.blog_id}`}
-              key={index}
-              className="shadow-lg cursor-pointer bg-gray-400 p-4 flex flex-col items-start rounded"
-            >
-              <img
-                className="h-[350px] w-full object-cover rounded"
-                src={`http://localhost:3000/${blog.image}`}
-                alt="blog image"
-              />
-              <hr className="mt-3" />
-              <div className="">
-                <h1 className="text-2xl uppercase mb-2 max-w-[90%]">
-                  {blog.title}
-                </h1>
-              </div>
-              <div className="flex gap-2 items-center">
-                <p className="rounded-full bg-slate-300 p-2">
-                  <FaUser className="text-black" />
-                </p>
-                <p>{blog.author}</p>-<p>{dateSlice}</p>
-              </div>
-              <div>
-                <p>{truncatedDesc}</p>
-                {showReadMore && (
-                  <span className="text-slate-100 cursor-pointer text-sm underline">
-                    ...read more
-                  </span>
-                )}
-              </div>
-            </Link>
-          );
-        })}
+            return (
+              <Link
+                to={`/blog/detail/${blog.blog_id}`}
+                key={index}
+                className="shadow-lg cursor-pointer bg-gray-400 p-4 flex flex-col items-start rounded"
+              >
+                <img
+                  className="h-[350px] w-full object-cover rounded"
+                  src={`http://localhost:3000/${blog.image}`}
+                  alt="blog image"
+                />
+                <hr className="mt-3" />
+                <div className="">
+                  <h1 className="text-2xl uppercase mb-2 max-w-[90%]">
+                    {blog.title}
+                  </h1>
+                </div>
+                <div className="flex gap-2 items-center">
+                  <p className="rounded-full bg-slate-300 p-2">
+                    <FaUser className="text-black" />
+                  </p>
+                  <p>{blog.author}</p>-<p>{dateSlice}</p>
+                </div>
+                <div>
+                  <p>{truncatedDesc}</p>
+                  {showReadMore && (
+                    <span className="text-slate-100 cursor-pointer text-sm underline">
+                      ...read more
+                    </span>
+                  )}
+                </div>
+              </Link>
+            );
+          })
+        ) : (
+          <div>
+            <p>No blog posted.</p>
+          </div>
+        )}
       </div>
     </div>
   );

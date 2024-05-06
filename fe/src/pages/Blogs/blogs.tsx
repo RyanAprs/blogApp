@@ -48,7 +48,7 @@ const Blogs = () => {
         />
         <hr className="mt-3" />
         <div className="">
-          <h1 className="text-2xl uppercase mb-2">{blog.title}</h1>
+          <h1 className="text-2xl uppercase mb-2 max-w-[90%]">{blog.title}</h1>
         </div>
         <div className="flex gap-2 items-center">
           <p className="rounded-full bg-slate-300 p-2">

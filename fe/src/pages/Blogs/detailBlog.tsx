@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { FaPen, FaTrash, FaUser } from "react-icons/fa";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 const DetailBlog = () => {
   const [title, setTitle] = useState();
@@ -12,6 +12,8 @@ const DetailBlog = () => {
   const [date, setDate] = useState();
   const [user, setUser] = useState();
   const { id } = useParams();
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     getBlogById();
@@ -60,9 +62,29 @@ const DetailBlog = () => {
     }
   };
 
-  const handleDelete = () => {
-    console.log(`delete ${id}, ${title}`);
-  };
+const handleDelete = async () => {
+  try {
+    const response = await axios.delete(
+      `http://localhost:3000/api/v1/blog/${id}`
+    );
+    if (response.status === 200) {
+      // Ubah dari response.status_code menjadi response.status
+      navigate("/blog");
+      console.log("delete blog berhasil");
+    } else {
+      console.log("delete blog gagal");
+    }
+  } catch (error) {
+    if (error.response) {
+      setError(error.response.data.message);
+    } else if (error.request) {
+      console.log("No response received from server:", error.request);
+    } else {
+      console.log("Request error:", error.message);
+    }
+  }
+};
+
 
   return (
     <div className="flex flex-col p-2">
