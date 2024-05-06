@@ -34,7 +34,7 @@ const BlogUser = () => {
   }, []);
 
   useEffect(() => {
-    if (user && user.user_id) {
+    if ((user && user.user_id) || user === null) {
       getBlogByUserId();
     }
     <button className="bg-gray-500 p-2 rounded mb-4 flex justify-center items-center gap-2 ">
