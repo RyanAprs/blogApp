@@ -23,7 +23,7 @@ const Login = () => {
         navigate("/");
         const user = response.data.data;
         const token = response.data.token;
-
+        localStorage.setItem("token", token)
         const expirationDate = new Date();
         expirationDate.setDate(expirationDate.getDate() + 1);
         document.cookie = `userData=${JSON.stringify(

@@ -1,4 +1,9 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import Login from "../../pages/Login/login";
 import Register from "../../pages/Register/register";
 import Header from "../../components/molecules/Header/header";
@@ -30,10 +35,6 @@ const RouteData = [
     element: <DetailBlog />,
   },
   {
-    path: "/blog/update/:id",
-    element: <UpdateBlog />,
-  },
-  {
     path: "/contact",
     element: <Contact />,
   },
@@ -42,14 +43,12 @@ const RouteData = [
     element: <Profile />,
   },
   {
-    path: "/update/:id",
-    element: <UpdateProfile />,
-  },
-  {
     path: "/profile/:id/blog/:id",
     element: <BlogUser />,
   },
 ];
+
+const token = localStorage.getItem("token");
 
 const Routing = () => {
   return (
@@ -57,6 +56,14 @@ const Routing = () => {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route
+          path="/blog/update/:id"
+          element={token ? <UpdateBlog /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="/update/:id"
+          element={token ? <UpdateProfile /> : <Navigate to="/login" />}
+        />
         {RouteData.map((route, index) => {
           return (
             <Route

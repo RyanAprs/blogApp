@@ -36,7 +36,8 @@ const BlogUser = () => {
   useEffect(() => {
     if (user && user.user_id) {
       getBlogByUserId();
-    }<button className="bg-gray-500 p-2 rounded mb-4 flex justify-center items-center gap-2 ">
+    }
+    <button className="bg-gray-500 p-2 rounded mb-4 flex justify-center items-center gap-2 ">
       <FaArrowLeft />
       Back
     </button>;
@@ -45,8 +46,10 @@ const BlogUser = () => {
   const getBlogByUserId = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:3000/api/v1/blog/${user.user_id}/${id}`
+        `http://localhost:3000/api/v1/blog/${id}/${id}`
       );
+
+      console.log(id);
 
       const blogs = response.data.data;
       setBlogs(blogs);
@@ -59,7 +62,7 @@ const BlogUser = () => {
     <div className="p-4 flex flex-col">
       <div className="flex  justify-between">
         <BackButton path={`/profile/${id}`} />
-        {user && user.user_id !== id ? null : (
+        {(user && user.user_id !== id) || user === null ? null : (
           <Link
             to="/blog/create"
             className="bg-gray-500 p-2 rounded mb-4 flex items-center"

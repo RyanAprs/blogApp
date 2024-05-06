@@ -39,6 +39,7 @@ const Header: React.FC = () => {
     document.cookie = `userData=; expires=${expiresUTC}; path=/;`;
 
     setUser(null);
+    localStorage.removeItem("token");
     navigate("/login");
   };
 
