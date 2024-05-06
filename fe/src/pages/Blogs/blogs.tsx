@@ -39,10 +39,10 @@ const Blogs = () => {
       <Link
         to={`detail/${blog.blog_id}`}
         key={index}
-        className="shadow-lg cursor-pointer bg-gray-400 p-4 flex flex-col items-start rounded"
+        className="shadow-lg cursor-pointer bg-gray-400 p-4 flex flex-col items-start rounded h-[530px]"
       >
         <img
-          className="h-[350px] w-full object-cover rounded"
+          className="h-[300px] w-full object-cover rounded"
           src={`http://localhost:3000/${blog.image}`}
           alt="blog image"
         />

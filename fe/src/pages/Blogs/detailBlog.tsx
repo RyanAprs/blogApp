@@ -12,13 +12,13 @@ const DetailBlog = () => {
   const [description, setDescription] = useState();
   const [date, setDate] = useState();
   const [user, setUser] = useState();
+  const [showModal, setShowModal] = useState(false); // State to control modal visibility
   const { id } = useParams();
-
   const navigate = useNavigate();
 
   useEffect(() => {
     getBlogById();
-  });
+  }, [id]); // Add id as dependency for useEffect
 
   useEffect(() => {
     const getUserDataFromCookie = () => {
@@ -64,6 +64,10 @@ const DetailBlog = () => {
   };
 
   const handleDelete = async () => {
+    setShowModal(true); // Show modal confirmation
+  };
+
+  const confirmDelete = async () => {
     try {
       const response = await axios.delete(
         `http://localhost:3000/api/v1/blog/${id}`
@@ -82,7 +86,13 @@ const DetailBlog = () => {
       } else {
         console.log("Request error:", error.message);
       }
+    } finally {
+      setShowModal(false); // Close modal after delete operation
     }
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
   };
 
   return (
@@ -116,14 +126,13 @@ const DetailBlog = () => {
       </div>
       {(user && user.user_id !== userBlogId) || userBlogId === null ? null : (
         <div className="flex justify-center items-center gap-4 p-4">
-          <Link
-            to=""
+          <button
             onClick={handleDelete}
             className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition-colors duration-300 flex gap-2 items-center"
           >
             <FaTrash />
             Delete
-          </Link>
+          </button>
           <Link
             to={`/blog/update/${id}`}
             className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition-colors duration-300 flex gap-2 items-center"
@@ -131,6 +140,29 @@ const DetailBlog = () => {
             <FaPen />
             Update
           </Link>
+        </div>
+      )}
+
+      {/* Modal Confirmation */}
+      {showModal && (
+        <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center">
+          <div className="bg-white p-6 rounded-lg shadow-lg">
+            <p>Are you sure you want to delete this blog?</p>
+            <div className="flex justify-center mt-4">
+              <button
+                onClick={confirmDelete}
+                className="bg-red-500 text-white px-4 py-2 rounded mr-2 hover:bg-red-600 transition-colors duration-300"
+              >
+                Yes
+              </button>
+              <button
+                onClick={closeModal}
+                className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition-colors duration-300"
+              >
+                No
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </div>
