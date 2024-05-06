@@ -81,7 +81,7 @@ const Profile = () => {
         ) : (
           <>
             <Link
-              to={`/update/${userId}`}
+              to={`/profile/update/${userId}`}
               className="bg-gray-400 text-color-dark font-bold py-3 px-3 text-lg rounded"
             >
               Edit Profile

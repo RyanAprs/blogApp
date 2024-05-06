@@ -58,11 +58,29 @@ const Routing = () => {
         <Route path="/register" element={<Register />} />
         <Route
           path="/blog/update/:id"
-          element={token ? <UpdateBlog /> : <Navigate to="/login" />}
+          element={
+            token ? (
+              <>
+                <Header />
+                <UpdateBlog />
+              </>
+            ) : (
+              <Navigate to="/login" />
+            )
+          }
         />
         <Route
-          path="/update/:id"
-          element={token ? <UpdateProfile /> : <Navigate to="/login" />}
+          path="/profile/update/:id"
+          element={
+            token ? (
+              <>
+                <Header />
+                <UpdateProfile />
+              </>
+            ) : (
+              <Navigate to="/login" />
+            )
+          }
         />
         {RouteData.map((route, index) => {
           return (
