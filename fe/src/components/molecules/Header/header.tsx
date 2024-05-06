@@ -37,10 +37,12 @@ const Header: React.FC = () => {
 
     const expiresUTC = expiresDate.toUTCString();
     document.cookie = `userData=; expires=${expiresUTC}; path=/;`;
+    document.cookie = `userData=; expires=${expiresUTC}; path=/;`;
 
     setUser(null);
     localStorage.removeItem("token");
     navigate("/login");
+    window.location.reload();
   };
 
   return (

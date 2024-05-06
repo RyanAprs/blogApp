@@ -22,14 +22,14 @@ const Login = () => {
       if (response.data.status_code === 200) {
         navigate("/");
         const user = response.data.data;
-        const token = response.data.token;
-        localStorage.setItem("token", token)
         const expirationDate = new Date();
         expirationDate.setDate(expirationDate.getDate() + 1);
         document.cookie = `userData=${JSON.stringify(
           user
         )}; expires=${expirationDate.toUTCString()}`;
 
+        const token = response.data.token;
+        localStorage.setItem("token", token);
         console.log(user);
         console.log(token);
       } else {

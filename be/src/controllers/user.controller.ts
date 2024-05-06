@@ -6,6 +6,8 @@ import {
 } from "../services/user.service";
 import { profileUploadAsync } from "../config/upload.config";
 import { hashPassword } from "../utils/hashing";
+import validator from "validator";
+import { findUserByEmail } from "../services/auth.service";
 
 export const getUsers = async (req: Request, res: Response) => {
   const id = req.params.id;
@@ -61,10 +63,18 @@ export const updateUser = async (req: Request, res: Response) => {
     await profileUploadAsync(req, res);
 
     const id = req.params.id;
-    const { name, email, password, bio } = req.body;
+    const { name, email, bio, user_id } = req.body;
     const image = req.file ? req.file.originalname : null;
 
-    if (!name || !email || !password) {
+    if (req.body.email && !validator.isEmail(req.body.email)) {
+      return res.status(400).send({
+        status: false,
+        status_code: 400,
+        message: "Invalid email format",
+      });
+    }
+
+    if (!name || !email) {
       return res.status(400).send({
         status: false,
         status_code: 400,
@@ -72,13 +82,20 @@ export const updateUser = async (req: Request, res: Response) => {
       });
     }
 
-    const hashedPassword = hashPassword(password);
+    const userEmail = await findUserByEmail(email);
+    if (userEmail) {
+      return res.status(409).send({
+        status: false,
+        status_code: 409,
+        message: "Email is already registered",
+      });
+    }
 
     const userData = {
-      email,
+      user_id,
       name,
-      password: hashedPassword,
       image,
+      email,
       bio,
     };
 
