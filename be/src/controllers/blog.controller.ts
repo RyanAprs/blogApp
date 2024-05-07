@@ -6,6 +6,7 @@ import {
   getBlogById,
   getBlogByTitle,
   getBlogByUserId,
+  getBlogImage,
   insertBlog,
 } from "../services/blog.service";
 import { v4 as uuidv4 } from "uuid";
@@ -140,7 +141,15 @@ export const updateBlog = async (req: Request, res: Response) => {
     const { title, description, author, user_blog_id } = req.body;
     const image = req.file ? req.file.filename : null;
 
-    if (!title || !description || !author || !image || !user_blog_id) {
+    let imagePrevious;
+
+    if (image) {
+      imagePrevious = image;
+    } else {
+      imagePrevious = await getBlogImage(id);
+    }
+
+    if (!title || !description || !author || !user_blog_id) {
       return res.status(400).send({
         status: false,
         status_code: 400,
@@ -153,7 +162,7 @@ export const updateBlog = async (req: Request, res: Response) => {
       title,
       description,
       author,
-      image,
+      image: imagePrevious,
     };
 
     const blog = await getBlogAndUpdate(id, blogData);

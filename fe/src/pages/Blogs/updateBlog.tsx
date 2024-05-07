@@ -69,12 +69,7 @@ const UpdateBlog = () => {
       formData.append("description", description);
       formData.append("author", author);
       formData.append("user_blog_id", user_blog_id);
-
-      if (image) {
-        formData.append("image", image);
-      } else {
-        formData.append("image", imagePrevious);
-      }
+      formData.append("image", image);
 
       const response = await axios.put(
         `http://localhost:3000/api/v1/blog/${id}`,

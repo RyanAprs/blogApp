@@ -181,3 +181,9 @@ export const getBlogAndDelete = async (id: string) => {
     throw error;
   }
 };
+
+export const getBlogImage = async (id: string) => {
+  const blog = await blogModel.findOne({ id });
+  const blogImage = blog?.image;
+  return blogImage;
+};
