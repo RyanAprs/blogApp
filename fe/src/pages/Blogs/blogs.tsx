@@ -34,42 +34,49 @@ const Blogs = () => {
     }
   };
 
-  const BlogList = () =>
-    blogs.map((blog, index) => (
-      <Link
-        to={`detail/${blog.blog_id}`}
-        key={index}
-        className="shadow-lg cursor-pointer bg-gray-400 p-4 flex flex-col items-start rounded h-[530px]"
-      >
-        <img
-          className="h-[300px] w-full object-cover rounded"
-          src={`http://localhost:3000/${blog.image}`}
-          alt="blog image"
-        />
-        <hr className="mt-3" />
-        <div className="">
-          <h1 className="text-2xl uppercase mb-2 max-w-[90%]">{blog.title}</h1>
-        </div>
-        <div className="flex gap-2 items-center">
-          <p className="rounded-full bg-slate-300 p-2">
-            <FaUser className="text-black" />
-          </p>
-          <p>{blog.author}</p>-<p>{blog.createdAt.slice(0, 10)}</p>
-        </div>
-        <div>
-          <p>
-            {blog.description.length > 100
-              ? `${blog.description.slice(0, 100)}...`
-              : blog.description}
-          </p>
-          {blog.description.length > 100 && (
-            <span className="text-slate-100 cursor-pointer text-sm underline">
-              ...read more
-            </span>
-          )}
-        </div>
-      </Link>
-    ));
+  const BlogList = () => (
+    <div className="grid md:grid-cols-2 grid-cols-1 gap-4  text-black items-center justify-center">
+      {blogs.map((blog, index) => (
+        <Link
+          to={`detail/${blog.blog_id}`}
+          key={index}
+          className="shadow-lg cursor-pointer bg-gray-400 p-4 flex flex-col items-start rounded h-[530px]"
+        >
+          <img
+            className="h-[300px] w-full object-cover rounded"
+            src={`http://localhost:3000/${blog.image}`}
+            alt="blog image"
+          />
+          <hr className="mt-3" />
+          <div className="">
+            <h1 className="text-2xl uppercase mb-2 max-w-[90%]">
+              {blog.title}
+            </h1>
+          </div>
+          <div className="flex gap-2 items-center">
+            <p className="rounded-full bg-slate-300 p-2">
+              <FaUser className="text-black" />
+            </p>
+            <p>
+              {blog.author} - {blog.createdAt.slice(0, 10)}
+            </p>
+          </div>
+          <div>
+            <p>
+              {blog.description.length > 100
+                ? `${blog.description.slice(0, 100)}...`
+                : blog.description}
+            </p>
+            {blog.description.length > 100 && (
+              <span className="text-slate-100 cursor-pointer text-sm underline">
+                ...read more
+              </span>
+            )}
+          </div>
+        </Link>
+      ))}
+    </div>
+  );
 
   return (
     <div className="p-4 flex flex-col gap-6">
@@ -81,8 +88,15 @@ const Blogs = () => {
           onChange={({ target }) => search(target.value)}
         />
       </div>
-      <div className="grid md:grid-cols-2 grid-cols-1 gap-4  text-black items-center justify-center">
-        {blogs.length > 0 ? <BlogList /> : <p>No blogs found.</p>}
+      <div className="">
+        {/* {blogs.length > 0 ? <BlogList /> : <p>No blogs found.</p>} */}
+        {Array.isArray(blogs) && blogs.length > 0 ? (
+          <BlogList />
+        ) : (
+          <div className="flex justify-center">
+            <h1>No Blog Posted</h1>
+          </div>
+        )}
       </div>
     </div>
   );
