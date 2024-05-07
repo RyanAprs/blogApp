@@ -59,27 +59,19 @@ const Routing = () => {
         <Route
           path="/blog/update/:id"
           element={
-            token ? (
-              <>
-                <Header />
-                <UpdateBlog />
-              </>
-            ) : (
-              <Navigate to="/login" />
-            )
+            <>
+              <Header />
+              <UpdateBlog />
+            </>
           }
         />
         <Route
           path="/profile/update/:id"
           element={
-            token ? (
-              <>
-                <Header />
-                <UpdateProfile />
-              </>
-            ) : (
-              <Navigate to="/login" />
-            )
+            <>
+              <Header />
+              <UpdateProfile />
+            </>
           }
         />
         {RouteData.map((route, index) => {

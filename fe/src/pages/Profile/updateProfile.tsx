@@ -40,7 +40,6 @@ const UpdateProfile = () => {
 
     const userData = getUserDataFromCookie();
     setUser(userData);
-    setUserId(userData.user_id);
   }, []);
 
   useEffect(() => {
@@ -51,7 +50,10 @@ const UpdateProfile = () => {
         );
         if (response.status === 200) {
           const userData = response.data.data;
+          console.log(userData.user_id);
+
           setName(userData.name);
+          setUserId(userData.user_id);
           setImage(userData.image);
           setEmail(userData.email);
           setPassword(userData.password);
@@ -74,7 +76,7 @@ const UpdateProfile = () => {
   const handleUpdate = async () => {
     try {
       const formData = new FormData();
-      formData.append("user_id", id|| "");
+      formData.append("user_id", userId);
       formData.append("name", name || "");
       formData.append("email", email || "");
       formData.append("password", newPassword || password || "");
@@ -96,9 +98,22 @@ const UpdateProfile = () => {
       if (response.status === 200) {
         const user = response.data.data;
         const expirationDate = new Date();
+        console.log(user);
         expirationDate.setDate(expirationDate.getDate() + 1);
+        // Check if userData exists in cookies
+        const existingUserData = getCookie("userData");
+        let updatedUserData;
+
+        if (existingUserData) {
+          const parsedUserData = JSON.parse(existingUserData);
+
+          updatedUserData = { ...parsedUserData, ...user };
+        } else {
+          updatedUserData = user;
+        }
+
         document.cookie = `userData=${JSON.stringify(
-          user
+          updatedUserData
         )}; expires=${expirationDate.toUTCString()}`;
 
         navigate(`/profile/${id}`);
@@ -116,6 +131,22 @@ const UpdateProfile = () => {
       }
     }
   };
+
+  function getCookie(name) {
+    const cookieName = `${name}=`;
+    const decodedCookie = decodeURIComponent(document.cookie);
+    const cookieArray = decodedCookie.split(";");
+    for (let i = 0; i < cookieArray.length; i++) {
+      let cookie = cookieArray[i];
+      while (cookie.charAt(0) === " ") {
+        cookie = cookie.substring(1);
+      }
+      if (cookie.indexOf(cookieName) === 0) {
+        return cookie.substring(cookieName.length, cookie.length);
+      }
+    }
+    return null;
+  }
 
   const onImageUpload = (e) => {
     const file = e.target.files[0];

@@ -53,15 +53,6 @@ const Profile = () => {
     }
   };
 
-  // const changeCookieData = () => {
-  //   const now = new Date();
-
-  //   const expiresDate = new Date(now.getTime() + 24 * 60 * 60 * 100);
-
-  //   const expiresUTC = expiresDate.toUTCString();
-  //   document.cookie = `userData=; expires=${expiresUTC}; path=/;`;
-  // };
-
   return (
     <div className="mt-8 text-color-primary text-2xl flex flex-col justify-center items-center">
       {image !== null ? (
