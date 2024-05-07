@@ -57,7 +57,6 @@ const Header: React.FC = () => {
 
     const expiresUTC = expiresDate.toUTCString();
     document.cookie = `userData=; expires=${expiresUTC}; path=/;`;
-    document.cookie = `userData=; expires=${expiresUTC}; path=/;`;
 
     setUser(null);
     localStorage.removeItem("token");
@@ -89,7 +88,7 @@ const Header: React.FC = () => {
         <div className="relative" ref={dropdownRef}>
           <div className="flex items-center">
             {user && user.name && <p className="mr-2">{user.name}</p>}
-            {user ? (
+            {user && user.image !== null && (
               <button onClick={toggleDropdown}>
                 <img
                   src={`http://localhost:3000/${user.image}`}
@@ -97,7 +96,8 @@ const Header: React.FC = () => {
                   className="h-[40px] w-[40px] object-cover rounded-full bg-gray-200"
                 />
               </button>
-            ) : (
+            )}
+            {user && user.image === null && (
               <button
                 onClick={toggleDropdown}
                 className="cursor-pointer p-3 bg-gray-200 rounded-full"
