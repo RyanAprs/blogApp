@@ -9,8 +9,6 @@ const UpdateProfile = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [image, setImage] = useState(null);
-  const [password, setPassword] = useState("");
-  const [newPassword, setNewPassword] = useState("");
   const [bio, setBio] = useState("");
   const [imagePreview, setImagePreview] = useState(null);
   const [user, setUser] = useState(null);
@@ -50,13 +48,11 @@ const UpdateProfile = () => {
         );
         if (response.status === 200) {
           const userData = response.data.data;
-          console.log(userData.user_id);
 
           setName(userData.name);
           setUserId(userData.user_id);
           setImage(userData.image);
           setEmail(userData.email);
-          setPassword(userData.password);
           setBio(userData.bio);
           if (userData.image !== null) {
             setImagePreview(`http://localhost:3000/${userData.image}`);
@@ -79,11 +75,8 @@ const UpdateProfile = () => {
       formData.append("user_id", userId);
       formData.append("name", name || "");
       formData.append("email", email || "");
-      formData.append("password", newPassword || password || "");
       formData.append("bio", bio || "");
-      if (image) {
-        formData.append("image", image);
-      }
+      formData.append("image", image);
 
       const response = await axios.put(
         `http://localhost:3000/api/v1/user/${id}`,

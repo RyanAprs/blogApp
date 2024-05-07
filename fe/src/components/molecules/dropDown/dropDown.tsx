@@ -28,7 +28,7 @@ const DropdownMenu = ({ user, handleLogout }) => {
     <div className="relative" ref={dropdownRef}>
       <div className="flex items-center">
         {user && user.name && <p className="mr-2">{user.name}</p>}
-        {user && user.image !== null ? (
+        {user ? (
           <button onClick={toggleDropdown}>
             <img
               src={`http://localhost:3000/${user.image}`}

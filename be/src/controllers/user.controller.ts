@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import {
   getAllUser,
+  getImage,
   getUserAndUpdate,
   getUserById,
 } from "../services/user.service";
@@ -59,12 +60,22 @@ export const getUsers = async (req: Request, res: Response) => {
 };
 
 export const updateUser = async (req: Request, res: Response) => {
+
+
   try {
     await profileUploadAsync(req, res);
 
-    const id = req.params.id;
-    const { name, email, bio, user_id, password } = req.body;
-    const image = req.file ? req.file.originalname : null;
+      const id = req.params.id;
+      const { name, email, bio, user_id } = req.body;
+      const image = req.file ? req.file.originalname : null;
+
+      let imagePrevious;
+
+      if (image) {
+        imagePrevious = image;
+      } else {
+        imagePrevious = await getImage(user_id);
+      }
 
     if (req.body.email && !validator.isEmail(req.body.email)) {
       return res.status(400).send({
@@ -91,20 +102,11 @@ export const updateUser = async (req: Request, res: Response) => {
       });
     }
 
-    let hashedPassword;
-
-    if (password) {
-      const hashedPassword = hashPassword(password);
-    } else {
-      const hashedPassword = await getPassword(email);
-    }
-
     const userData = {
       id: id,
       user_id,
       name,
-      image,
-      password: hashedPassword,
+      image: imagePrevious,
       email,
       bio,
     };
