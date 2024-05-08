@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import BackButton from "../../components/atoms/backButton/backButton";
 
 const ResetPassword = () => {
   const [email, setEmail] = useState("");
@@ -89,12 +90,16 @@ const ResetPassword = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
           )}
-          <button
-            onClick={handleContinue}
-            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors duration-300"
-          >
-            {showPasswordInput ? "Reset Password" : "Continue"}
-          </button>
+
+          <div className="flex gap-4">
+            <BackButton path={"/login"} />
+            <button
+              onClick={handleContinue}
+              className="bg-gray-500 p-2 rounded mb-4 flex justify-center items-center gap-2"
+            >
+              {showPasswordInput ? "Reset Password" : "Continue"}
+            </button>
+          </div>
         </div>
       </div>
     </div>

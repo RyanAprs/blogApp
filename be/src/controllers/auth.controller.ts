@@ -204,6 +204,14 @@ export const resetPassword = async (req: Request, res: Response) => {
     });
   }
 
+  if (password.length <= 6) {
+    return res.status(400).send({
+      status: false,
+      status_code: 400,
+      message: "password must be at least 6 characters",
+    });
+  }
+
   try {
     const user = await findUserByEmail(email);
 
