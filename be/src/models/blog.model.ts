@@ -21,6 +21,9 @@ const blogSchema = new mongoose.Schema(
     author: {
       type: String,
     },
+    user_image: {
+      type: String
+    }
   },
   { timestamps: true, _id: true }
 );

@@ -11,6 +11,7 @@ import {
 } from "../services/blog.service";
 import { v4 as uuidv4 } from "uuid";
 import { uploadAsync } from "../config/upload.config";
+import { getImageForBlog, getName } from "../services/user.service";
 
 export const getBlog = async (req: Request, res: Response) => {
   const id = req.params.id;
@@ -96,11 +97,11 @@ export const createBlog = async (req: Request, res: Response) => {
   try {
     await uploadAsync(req, res);
 
-    const { title, description, author, user_blog_id } = req.body;
+    const { title, description, user_blog_id } = req.body;
     const blog_id = uuidv4();
     const image = req.file ? req.file.filename : null;
 
-    if (!title || !description || !author || !image || !user_blog_id) {
+    if (!title || !description || !image || !user_blog_id) {
       return res.status(400).send({
         status: false,
         status_code: 400,
@@ -108,12 +109,16 @@ export const createBlog = async (req: Request, res: Response) => {
       });
     }
 
+    const name = await getName(user_blog_id);
+    const user_image = await getImageForBlog(user_blog_id);
+
     const blogData = {
       blog_id,
       user_blog_id,
       title,
       description,
-      author,
+      author: name,
+      user_image,
       image,
     };
     await insertBlog(blogData);

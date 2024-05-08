@@ -21,6 +21,18 @@ export const getImage = async (user_id: string) => {
   return image;
 };
 
+export const getImageForBlog = async (user_blog_id: string) => {
+  const user = await authModel.findOne({ user_id: user_blog_id });
+  const image = user?.image;
+  return image;
+};
+
+export const getName = async (user_blog_id: string) => {
+  const user = await authModel.findOne({ user_id: user_blog_id });
+  const name = user?.name;
+  return name;
+};
+
 export const getUserAndUpdate = async (id: string, payload: any) => {
   return await authModel.findOneAndUpdate(
     {

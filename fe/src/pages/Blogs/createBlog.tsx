@@ -8,7 +8,6 @@ const CreateBlog = () => {
   const [description, setDescription] = useState("");
   const [image, setImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
-  const [author, setAuthor] = useState("");
   const [user_blog_id, setUser_blog_id] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
@@ -35,7 +34,6 @@ const CreateBlog = () => {
 
     const userData = getUserDataFromCookie();
     if (userData) {
-      setAuthor(userData.name);
       setUser_blog_id(userData.user_id);
     }
   }, []);
@@ -45,7 +43,6 @@ const CreateBlog = () => {
       const formData = new FormData();
       formData.append("title", title);
       formData.append("description", description);
-      formData.append("author", author);
       formData.append("user_blog_id", user_blog_id);
       formData.append("image", image);
 
