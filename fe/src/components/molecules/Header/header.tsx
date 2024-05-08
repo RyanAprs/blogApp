@@ -97,7 +97,16 @@ const Header: React.FC = () => {
                 />
               </button>
             )}
-            {user && user.image === null && (
+            {!user ||
+              (user.image === null && (
+                <button
+                  onClick={toggleDropdown}
+                  className="cursor-pointer p-3 bg-gray-200 rounded-full"
+                >
+                  <FaUser className="text-black " />
+                </button>
+              ))}
+            {!user && (
               <button
                 onClick={toggleDropdown}
                 className="cursor-pointer p-3 bg-gray-200 rounded-full"

@@ -54,8 +54,16 @@ const Blogs = () => {
             </h1>
           </div>
           <div className="flex gap-2 items-center">
-            <p className="rounded-full bg-slate-300 p-2">
-              <FaUser className="text-black" />
+            <p className="rounded-full bg-slate-300 border-black border-[1px]">
+              {blog.user_image && blog.user_image !== null ? (
+                <img
+                  src={`http://localhost:3000/${blog.user_image}`}
+                  alt="user image"
+                  className="rounded-full w-[50px] h-[50px] object-cover "
+                />
+              ) : (
+                <FaUser className="text-black rounded-full w-[50px] h-[50px] object-cover" />
+              )}
             </p>
             <p>
               {blog.author} - {blog.createdAt.slice(0, 10)}

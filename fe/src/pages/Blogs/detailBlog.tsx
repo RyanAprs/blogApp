@@ -12,6 +12,7 @@ const DetailBlog = () => {
   const [description, setDescription] = useState();
   const [date, setDate] = useState();
   const [user, setUser] = useState();
+  const [userImage, setUserImage] = useState();
   const [showModal, setShowModal] = useState(false);
   const { id } = useParams();
 
@@ -55,6 +56,7 @@ const DetailBlog = () => {
       setAuthor(response.data.data.author);
       setBlogImage(response.data.data.image);
       setDescription(response.data.data.description);
+      setUserImage(response.data.data.user_image);
       const dateCreatedBlog = response.data.data.createdAt;
       const dateSlice = dateCreatedBlog.slice(0, 10);
       setDate(dateSlice);
@@ -103,8 +105,16 @@ const DetailBlog = () => {
           className="flex gap-3 mb-3 items-center py-2 w-max"
         >
           <div className="flex gap-1 mb-3 items-center">
-            <p className="rounded-full bg-slate-300 p-3">
-              <FaUser />
+            <p className="rounded-full bg-slate-300 border-black border-[1px]">
+              {userImage && userImage !== null ? (
+                <img
+                  src={`http://localhost:3000/${userImage}`}
+                  alt="user image"
+                  className="rounded-full w-[50px] h-[50px] object-cover"
+                />
+              ) : (
+                <FaUser className="text-black rounded-full w-[50px] h-[50px] object-cover" />
+              )}
             </p>
             <p className="text-lg font-bold uppercase">{author} </p>
           </div>
