@@ -16,6 +16,7 @@ import UpdateProfile from "../../pages/Profile/updateProfile";
 import BlogUser from "../../pages/Profile/blogUser";
 import CreateBlog from "../../pages/Blogs/createBlog";
 import UpdateBlog from "../../pages/Blogs/updateBlog";
+import ResetPassword from "../../pages/ResetPassword/resetPassword";
 
 const RouteData = [
   {
@@ -56,6 +57,7 @@ const Routing = () => {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
         <Route
           path="/blog/update/:id"
           element={

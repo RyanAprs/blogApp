@@ -74,12 +74,17 @@ const Login = () => {
           >
             Login
           </button>
-          <p className="text-white mt-3">
-            do not have an account?{" "}
-            <Link className="underline text-blue-500" to="/register">
-              SignUp
+          <div className="flex flex-col items-center gap-3 p-3">
+            <Link className="hover:underline text-blue-500 " to="/reset-password">
+              Lost password?
             </Link>
-          </p>
+            <p className="text-white">
+              do not have an account?{" "}
+              <Link className="underline text-blue-500" to="/register">
+                SignUp
+              </Link>
+            </p>
+          </div>
         </div>
       </div>
     </div>
