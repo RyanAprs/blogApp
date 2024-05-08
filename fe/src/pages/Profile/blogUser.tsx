@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { FaArrowLeft, FaUser } from "react-icons/fa";
 import { Link, useParams } from "react-router-dom";
-import BackButton from "../../components/molecules/backButton/backButton";
+import BackButton from "../../components/atoms/backButton/backButton";
 
 const BlogUser = () => {
   const [user, setUser] = useState();

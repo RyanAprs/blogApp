@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { FaPen, FaTrash, FaUser } from "react-icons/fa";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import BackButton from "../../components/molecules/backButton/backButton";
+import BackButton from "../../components/atoms/backButton/backButton";
 
 const DetailBlog = () => {
   const [title, setTitle] = useState();

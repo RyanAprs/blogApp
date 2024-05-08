@@ -1,7 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { FaSave } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import BackButton from "../../components/atoms/backButton/backButton";
 
 const CreateBlog = () => {
   const [title, setTitle] = useState("");
@@ -11,6 +12,8 @@ const CreateBlog = () => {
   const [user_blog_id, setUser_blog_id] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
+
+  const { id } = useParams();
 
   useEffect(() => {
     const getUserDataFromCookie = () => {
@@ -111,13 +114,18 @@ const CreateBlog = () => {
             className="border-2 border-gray-300 rounded p-4 mb-4 w-full"
             onChange={onImageUpload}
           />
-          <button
-            onClick={handleCreate}
-            className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition-colors duration-300 flex gap-2 justify-center items-center"
-          >
-            <FaSave />
-            Create
-          </button>
+          <div className="flex gap-4">
+            <BackButton
+              path={`/profile/${user_blog_id}/blog/${user_blog_id}`}
+            />
+            <button
+              onClick={handleCreate}
+              className="bg-gray-500 p-2 rounded mb-4 flex justify-center items-center gap-2"
+            >
+              <FaSave />
+              Create
+            </button>
+          </div>
         </div>
       </div>
     </div>

@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { FaSave, FaUser } from "react-icons/fa";
 import { useNavigate, useParams } from "react-router-dom";
-import BackButton from "../../components/molecules/backButton/backButton";
+import BackButton from "../../components/atoms/backButton/backButton";
 
 const UpdateProfile = () => {
   const [error, setError] = useState("");
