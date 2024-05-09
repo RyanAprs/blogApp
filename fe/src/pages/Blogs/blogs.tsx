@@ -16,7 +16,7 @@ const Blogs = () => {
   const fetchBlogs = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:3000/api/v1/blog?page=${currentPage}&perPage=2`
+        `http://localhost:3000/api/v1/blog?page=${currentPage}&perPage=4`
       );
       setBlogs(response.data.data);
 
@@ -47,12 +47,12 @@ const Blogs = () => {
   };
 
   const BlogList = () => (
-    <div className="grid md:grid-cols-2 grid-cols-1 gap-4  text-black items-center justify-center">
+    <div className="grid md:grid-cols-2 grid-cols-1 gap-4  text-black  justify-center">
       {blogs.map((blog, index) => (
         <Link
           to={`detail/${blog.blog_id}`}
           key={index}
-          className="shadow-lg cursor-pointer bg-gray-400 p-4 flex flex-col items-start rounded h-[530px] border-gray-500 shadow-md border-[2px]"
+          className="shadow-lg cursor-pointer bg-gray-400 p-4 flex flex-col items-start rounded max-h-auto border-gray-500 border-[2px]"
         >
           <img
             className="h-[300px] w-full object-cover rounded border-gray-500 shadow-md border-[2px]"
@@ -61,7 +61,7 @@ const Blogs = () => {
           />
           <hr className="mt-3" />
           <div className="">
-            <h1 className="text-2xl uppercase mb-2 max-w-[90%]">
+            <h1 className="text-2xl uppercase mb-2">
               {blog.title}
             </h1>
           </div>

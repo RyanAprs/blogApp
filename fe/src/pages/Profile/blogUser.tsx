@@ -3,10 +3,13 @@ import { useEffect, useState } from "react";
 import { FaArrowLeft, FaUser } from "react-icons/fa";
 import { Link, useParams } from "react-router-dom";
 import BackButton from "../../components/atoms/backButton/backButton";
+import Pagination from "../../components/molecules/Pagination/pagination";
 
 const BlogUser = () => {
   const [user, setUser] = useState();
   const [blogs, setBlogs] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
   const { id } = useParams();
 
   useEffect(() => {
@@ -41,18 +44,24 @@ const BlogUser = () => {
       <FaArrowLeft />
       Back
     </button>;
-  }, [user, id]);
+  }, [user, id, currentPage]);
 
   const getBlogByUserId = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:3000/api/v1/blog/${id}/${id}`
+        `http://localhost:3000/api/v1/blog/${id}/${id}?page=${currentPage}&perPage=4`
       );
       const blogs = response.data.data;
+      console.log(response.data);
       setBlogs(blogs);
+      setTotalPages(response.data.total_page);
     } catch (error) {
       console.error("Error fetching blog:", error);
     }
+  };
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
   };
 
   return (
@@ -68,7 +77,7 @@ const BlogUser = () => {
           </Link>
         )}
       </div>
-      <div className="">
+      <div className="grid md:grid-cols-2 grid-cols-1 gap-4  text-black  justify-center">
         {Array.isArray(blogs) && blogs.length > 0 ? (
           blogs.map((blog, index) => {
             const dateSlice = blog.createdAt.slice(0, 10);
@@ -80,47 +89,42 @@ const BlogUser = () => {
             const showReadMore = descLength > 100;
 
             return (
-              <div className="grid md:grid-cols-2 grid-cols-1 gap-4  text-black items-center justify-center">
-                <Link
-                  to={`/blog/detail/${blog.blog_id}`}
-                  key={index}
-                  className="shadow-lg cursor-pointer bg-gray-400 p-4 flex flex-col items-start rounded"
-                >
-                  <img
-                    className="h-[350px] w-full object-cover rounded"
-                    src={`http://localhost:3000/${blog.image}`}
-                    alt="blog image"
-                  />
-                  <hr className="mt-3" />
-                  <div className="">
-                    <h1 className="text-2xl uppercase mb-2 max-w-[90%]">
-                      {blog.title}
-                    </h1>
-                  </div>
-                  <div className="flex gap-2 items-center">
-                    <p className="rounded-full bg-slate-300 border-black border-[1px]">
-                      {blog.user_image && blog.user_image !== null ? (
-                        <img
-                          src={`http://localhost:3000/${blog.user_image}`}
-                          alt="user image"
-                          className="rounded-full w-[50px] h-[50px] object-cover "
-                        />
-                      ) : (
-                        <FaUser className="text-black rounded-full w-[50px] h-[50px] object-cover" />
-                      )}
-                    </p>
-                    <p>{blog.author}</p>-<p>{dateSlice}</p>
-                  </div>
-                  <div>
-                    <p>{truncatedDesc}</p>
-                    {showReadMore && (
-                      <span className="text-slate-100 cursor-pointer text-sm underline">
-                        ...read more
-                      </span>
+              <Link
+                to={`/blog/detail/${blog.blog_id}`}
+                key={index}
+                className="shadow-lg cursor-pointer bg-gray-400 p-4 flex flex-col items-start rounded border-gray-500 border-[2px]"
+              >
+                <img
+                  className="h-[350px] w-full object-cover rounded border-gray-500 shadow-md border-[2px]"
+                  src={`http://localhost:3000/${blog.image}`}
+                  alt="blog image"
+                />
+                <div className="">
+                  <h1 className="text-2xl uppercase mb-2">{blog.title}</h1>
+                </div>
+                <div className="flex gap-2 items-center">
+                  <p className="rounded-full bg-slate-300 border-black border-[1px]">
+                    {blog.user_image && blog.user_image !== null ? (
+                      <img
+                        src={`http://localhost:3000/${blog.user_image}`}
+                        alt="user image"
+                        className="rounded-full w-[50px] h-[50px] object-cover "
+                      />
+                    ) : (
+                      <FaUser className="text-black rounded-full w-[50px] h-[50px] object-cover" />
                     )}
-                  </div>
-                </Link>
-              </div>
+                  </p>
+                  <p>{blog.author}</p>-<p>{dateSlice}</p>
+                </div>
+                <div>
+                  <p>{truncatedDesc}</p>
+                  {showReadMore && (
+                    <span className="text-slate-100 cursor-pointer text-sm underline">
+                      ...read more
+                    </span>
+                  )}
+                </div>
+              </Link>
             );
           })
         ) : (
@@ -128,6 +132,13 @@ const BlogUser = () => {
             <p>No blog posted.</p>
           </div>
         )}
+      </div>
+      <div className="p-4">
+        <Pagination
+          currentPage={currentPage}
+          onPageChange={handlePageChange}
+          totalPages={totalPages}
+        />
       </div>
     </div>
   );

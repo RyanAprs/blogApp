@@ -96,6 +96,8 @@ export const getBlogByUserId = async (
       });
       const totalItems = count;
 
+      const totalPages = Math.ceil(Number(totalItems) / Number(perPage));
+
       const blogs = await blogModel
         .find({ user_blog_id: user_blog_id })
         .skip(
@@ -112,6 +114,7 @@ export const getBlogByUserId = async (
           total_data: totalItems,
           per_page: parseInt(perPage.toString()),
           current_page: parseInt(currentPage.toString()),
+          total_page: totalPages,
         });
       } else {
         return res.status(200).json({
