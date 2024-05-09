@@ -17,6 +17,7 @@ import BlogUser from "../../pages/Profile/blogUser";
 import CreateBlog from "../../pages/Blogs/createBlog";
 import UpdateBlog from "../../pages/Blogs/updateBlog";
 import ResetPassword from "../../pages/ResetPassword/resetPassword";
+import Footer from "../../components/molecules/Footer/footer";
 
 const RouteData = [
   {
@@ -64,6 +65,7 @@ const Routing = () => {
             <>
               <Header />
               <UpdateBlog />
+              <Footer />
             </>
           }
         />
@@ -73,6 +75,7 @@ const Routing = () => {
             <>
               <Header />
               <UpdateProfile />
+              <Footer />
             </>
           }
         />
@@ -85,6 +88,7 @@ const Routing = () => {
                 <>
                   <Header />
                   {route.element}
+                  <Footer />
                 </>
               }
             />
