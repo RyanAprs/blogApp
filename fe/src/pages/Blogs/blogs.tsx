@@ -1,20 +1,26 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { FaUser } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import Pagination from "../../components/molecules/Pagination/pagination";
+import { FaUser } from "react-icons/fa";
 
 const Blogs = () => {
   const [blogs, setBlogs] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
     fetchBlogs();
-  }, []);
+  }, [currentPage]); // Fetch blogs every time currentPage changes
 
   const fetchBlogs = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/api/v1/blog");
+      const response = await axios.get(
+        `http://localhost:3000/api/v1/blog?page=${currentPage}&perPage=2`
+      );
       setBlogs(response.data.data);
-      console.log(response);
+
+      setTotalPages(response.data.total_page);
     } catch (error) {
       console.log(error);
     }
@@ -27,6 +33,7 @@ const Blogs = () => {
           `http://localhost:3000/api/v1/blog/search/${q}`
         );
         setBlogs(response.data.data);
+        setTotalPages(1);
       } else if (q.length === 0) {
         fetchBlogs();
       }
@@ -35,16 +42,20 @@ const Blogs = () => {
     }
   };
 
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
+
   const BlogList = () => (
     <div className="grid md:grid-cols-2 grid-cols-1 gap-4  text-black items-center justify-center">
       {blogs.map((blog, index) => (
         <Link
           to={`detail/${blog.blog_id}`}
           key={index}
-          className="shadow-lg cursor-pointer bg-gray-400 p-4 flex flex-col items-start rounded h-[530px]"
+          className="shadow-lg cursor-pointer bg-gray-400 p-4 flex flex-col items-start rounded h-[530px] border-gray-500 shadow-md border-[2px]"
         >
           <img
-            className="h-[300px] w-full object-cover rounded"
+            className="h-[300px] w-full object-cover rounded border-gray-500 shadow-md border-[2px]"
             src={`http://localhost:3000/${blog.image}`}
             alt="blog image"
           />
@@ -88,17 +99,16 @@ const Blogs = () => {
   );
 
   return (
-    <div className="p-4 flex flex-col gap-6">
-      <div>
-        <input
-          type="text"
-          placeholder="Search blog..."
-          className="border-none p-2 w-full focus:outline-none text-black rounded-full"
-          onChange={({ target }) => search(target.value)}
-        />
-      </div>
-      <div className="">
-        {/* {blogs.length > 0 ? <BlogList /> : <p>No blogs found.</p>} */}
+    <>
+      <div className="p-4 flex flex-col gap-6">
+        <div>
+          <input
+            type="text"
+            placeholder="Search blog..."
+            className="border-none p-2 w-full focus:outline-none text-black rounded-full"
+            onChange={({ target }) => search(target.value)}
+          />
+        </div>
         {Array.isArray(blogs) && blogs.length > 0 ? (
           <BlogList />
         ) : (
@@ -107,7 +117,14 @@ const Blogs = () => {
           </div>
         )}
       </div>
-    </div>
+      <div className="p-4">
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={handlePageChange}
+        />{" "}
+      </div>
+    </>
   );
 };
 

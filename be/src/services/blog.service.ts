@@ -16,6 +16,8 @@ export const getAllBlogs = async (
     const count = await blogModel.countDocuments();
     totalItems = count;
 
+    const totalPages = Math.ceil(Number(totalItems) / Number(perPage));
+
     const blogs = await blogModel
       .find()
       .skip(
@@ -32,6 +34,7 @@ export const getAllBlogs = async (
         total_data: totalItems,
         per_page: parseInt(perPage.toString()),
         current_page: parseInt(currentPage.toString()),
+        total_page: totalPages,
       });
     } else {
       return res.status(200).json({
