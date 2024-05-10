@@ -56,8 +56,8 @@ Base Url = http://localhost:3000/api/v1
 
 | Endpoint | Usage | Example |
 | ------ | ------ |----------|
-| blogs |``/blogs`` |-|
-| Get blog by id | ``/blogs/:id`` |``/blogs/1``|
+| blogs |``/blog`` |-|
+| Get blog by id | ``/blog/:id`` |``/blog/1``|
 | Login | ``/auth/login`` | - | 
 | Register | ``/auth/register`` | - |
 | Reset password | ``/auth/reset-password`` | - |
