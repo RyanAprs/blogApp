@@ -18,6 +18,7 @@ import CreateBlog from "../../pages/Blogs/createBlog";
 import UpdateBlog from "../../pages/Blogs/updateBlog";
 import ResetPassword from "../../pages/ResetPassword/resetPassword";
 import Footer from "../../components/molecules/Footer/footer";
+import { useAuthContext } from "../context/useAuthContext";
 
 const RouteData = [
   {
@@ -27,10 +28,6 @@ const RouteData = [
   {
     path: "/blog",
     element: <Blogs />,
-  },
-  {
-    path: "/blog/create",
-    element: <CreateBlog />,
   },
   {
     path: "/blog/detail/:id",
@@ -50,9 +47,9 @@ const RouteData = [
   },
 ];
 
-const token = localStorage.getItem("token");
-
 const Routing = () => {
+  const {token} = useAuthContext();
+
   return (
     <Router>
       <Routes>
@@ -62,23 +59,46 @@ const Routing = () => {
         <Route
           path="/blog/update/:id"
           element={
-            <>
-              <Header />
-              <UpdateBlog />
-              <Footer />
-            </>
+            token ? (
+              <>
+                <Header />
+                <UpdateBlog />
+                <Footer />
+              </>
+            ) : (
+              <Navigate to="/login" />
+            )
           }
         />
         <Route
           path="/profile/update/:id"
           element={
-            <>
-              <Header />
-              <UpdateProfile />
-              <Footer />
-            </>
+            token ? (
+              <>
+                <Header />
+                <UpdateProfile />
+                <Footer />
+              </>
+            ) : (
+              <Navigate to="/login" />
+            )
           }
         />
+        <Route
+          path="/blog/create"
+          element={
+            token ? (
+              <>
+                <Header />
+                <CreateBlog />
+                <Footer />
+              </>
+            ) : (
+              <Navigate to="/login" />
+            )
+          }
+        />
+
         {RouteData.map((route, index) => {
           return (
             <Route

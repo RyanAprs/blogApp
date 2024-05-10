@@ -1,49 +1,16 @@
-import axios from "axios";
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { useLogin } from "../../config/hooks/useLogin";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState();
-  const [user, setUser] = useState();
+  const { login, error, isLoading } = useLogin();
 
-  const navigate = useNavigate();
+  const handleLogin = async (e) => {
+    e.preventDefault();
 
-  const handleLogin = async () => {
-    try {
-      const response = await axios.post(
-        "http://localhost:3000/api/v1/auth/login",
-        {
-          email,
-          password,
-        }
-      );
-      if (response.data.status_code === 200) {
-        navigate("/");
-        const user = response.data.data;
-        const expirationDate = new Date();
-        expirationDate.setDate(expirationDate.getDate() + 1);
-        document.cookie = `userData=${JSON.stringify(
-          user
-        )}; expires=${expirationDate.toUTCString()}`;
-
-        const token = response.data.token;
-        localStorage.setItem("token", token);
-        console.log(user);
-        console.log(token);
-      } else {
-        console.log("login gagal");
-      }
-    } catch (error: any) {
-      if (error.response) {
-        setError(error.response.data.message);
-      } else if (error.request) {
-        console.log("No response received from server:", error.request);
-      } else {
-        console.log("Request error:", error.message);
-      }
-    }
+    await login(email, password);
   };
 
   return (
@@ -53,7 +20,10 @@ const Login = () => {
           <h1 className="text-white text-3xl mb-4 font-semibold">Sign In</h1>
         </div>
         {error && <p className="text-red-500">{error}</p>}
-        <div className="flex items-center justify-center flex-col gap-2">
+        <form
+          onSubmit={handleLogin}
+          className="login flex items-center justify-center flex-col gap-2"
+        >
           <input
             type="email"
             placeholder="Email"
@@ -69,13 +39,16 @@ const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
           <button
-            onClick={handleLogin}
+            disabled={isLoading}
             className="bg-blue-500 text-white px-4 py-2 w-full rounded hover:bg-blue-600 transition-colors duration-300"
           >
             Login
           </button>
           <div className="flex flex-col items-center gap-3 p-3">
-            <Link className="hover:underline text-blue-500 " to="/reset-password">
+            <Link
+              className="hover:underline text-blue-500 "
+              to="/reset-password"
+            >
               Lost password?
             </Link>
             <p className="text-white">
@@ -85,7 +58,7 @@ const Login = () => {
               </Link>
             </p>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   );
