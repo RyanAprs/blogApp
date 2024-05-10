@@ -32,7 +32,6 @@ Install dependencies for frontend and run the app
 ```sh
 cd fe
 npm install 
-npm run dev
 ```
 ```sh
 npm run dev
