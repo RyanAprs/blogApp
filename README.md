@@ -11,7 +11,7 @@
 Dillinger uses a number of open source projects to work properly:
 
 - FrontEnd: ReactJs, Tailwind CSS
-- Backend: Node.js, Express.js, and MongoDB.
+- Backend: Node.js, Express.js.
 - Database: Uses MongoDB as a NoSQL database to store blog, user.
 ----
 ## Installation
@@ -49,6 +49,7 @@ npm run dev
 
 Access the Application:
 After running the backend server and frontend application, you can access the web application through a browser by visiting http://localhost:5173.
+
 ----
 ## API DOCUMENTATION
 Base Url = http://localhost:3000/api/v1
