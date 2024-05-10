@@ -25,7 +25,7 @@ Database: Uses MongoDB as a NoSQL database to store blog, user.
 1. Prerequisite Requirements:
 Make sure you have Node.js (version 12 or higher) and npm (Node Package Manager) installed on your system. You also need database management software like MongoDB.
 2. Clone the repository
-git clone https://github.com/RyanAprs/blogApp.git
+git clone https://github.com/RyanAprs/blogApp.git [Copy](#)
 3. Install Dependencies:
 Navigate to the cloned project directory and install all dependencies by running the following command:
 $cd blogApp
