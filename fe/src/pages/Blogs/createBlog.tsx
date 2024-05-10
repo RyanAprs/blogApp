@@ -116,7 +116,7 @@ const CreateBlog = () => {
           />
           <div className="flex gap-4">
             <BackButton
-              path={`/profile/${user_blog_id}/blog/${user_blog_id}`}
+              path={"/blog"}
             />
             <button
               onClick={handleCreate}
