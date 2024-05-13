@@ -90,8 +90,8 @@ const DetailBlog = () => {
   };
 
   return (
-    <div className="flex flex-col p-2 gap-5">
-      <div className="flex p-4">
+    <div className="flex flex-col p-2">
+      <div className="flex px-4">
         <BackButton path="/blog" />
       </div>
       <div className="px-4">
