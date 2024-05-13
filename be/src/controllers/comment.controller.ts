@@ -35,7 +35,7 @@ export const getComments = async (req: Request, res: Response) => {
         return res.status(200).send({
           status: true,
           status_code: 200,
-          message: "No comment",
+          message: "No comment posted",
           data: {},
         });
       }
