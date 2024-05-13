@@ -54,7 +54,7 @@ const Profile = () => {
   };
 
   return (
-    <div className="mt-8 text-color-primary text-2xl flex flex-col justify-center items-center">
+    <div className="mt-8 text-color-primary h-screen text-2xl flex flex-col justify-center items-center">
       {image !== null ? (
         <img
           src={`http://localhost:3000/${image}`}

@@ -84,79 +84,94 @@ const Header: React.FC = () => {
           <h1>Contact</h1>
         </Link>
       </nav>
-      <div>
-        <div className="relative" ref={dropdownRef}>
-          <div className="flex items-center">
-            {user && user.name && <p className="mr-2">{user.name}</p>}
-            {user && user.image !== null && (
-              <button onClick={toggleDropdown}>
-                <img
-                  src={`http://localhost:3000/${user.image}`}
-                  alt="user image"
-                  className="h-[40px] w-[40px] object-cover rounded-full bg-gray-200"
-                />
-              </button>
-            )}
-            {!user ||
-              (user.image === null && (
-                <button
-                  onClick={toggleDropdown}
-                  className="cursor-pointer p-3 bg-gray-200 rounded-full"
-                >
-                  <FaUser className="text-black " />
-                </button>
-              ))}
-            {!user && (
+
+      <div className="relative" ref={dropdownRef}>
+        <div className="flex items-center">
+          {user && user.name && <p className="mr-2">{user.name}</p>}
+          {user && user.image !== null && (
+            <button onClick={toggleDropdown}>
+              <img
+                src={`http://localhost:3000/${user.image}`}
+                alt="user image"
+                className="h-[40px] w-[40px] object-cover rounded-full bg-gray-200"
+              />
+            </button>
+          )}
+          {!user ||
+            (user.image === null && (
               <button
                 onClick={toggleDropdown}
                 className="cursor-pointer p-3 bg-gray-200 rounded-full"
               >
                 <FaUser className="text-black " />
               </button>
-            )}
-          </div>
-          {isOpen && (
-            <div className="absolute top-full left-0 mt-2 bg-white border border-gray-300 rounded shadow-lg">
-              {user ? (
-                <div className="flex flex-col">
+            ))}
+          {!user && (
+            <button
+              onClick={toggleDropdown}
+              className="cursor-pointer p-3 bg-gray-200 rounded-full"
+            >
+              <FaUser className="text-black " />
+            </button>
+          )}
+        </div>
+        {isOpen && (
+          <div className="absolute top-full right-0 mt-2 bg-white border border-gray-300 rounded shadow-lg">
+            {user ? (
+              <div className="flex flex-col">
+                <Link
+                  to={`/profile/${user.user_id}`}
+                  className="px-6 py-2 block w-full text-left text-gray-800 hover:bg-gray-200"
+                >
+                  Profile
+                </Link>
+                <nav className="text-left block md:hidden">
                   <Link
-                    to={`/profile/${user.user_id}`}
-                    className="px-6 py-2 block w-full text-left text-gray-800 hover:bg-gray-200"
+                    to="/blog"
+                    className="px-6 py-2 block w-full text-gray-800 hover:bg-gray-200"
                   >
-                    Profile
+                    <h1>Blogs</h1>
                   </Link>
-                  <nav className="text-left block md:hidden">
-                    <Link
-                      to="/blog"
-                      className="px-6 py-2 block w-full text-gray-800 hover:bg-gray-200"
-                    >
-                      <h1>Blogs</h1>
-                    </Link>
-                    <Link
-                      to="/contact"
-                      className="px-6 py-2 block w-full text-gray-800 hover:bg-gray-200"
-                    >
-                      <h1>Contact</h1>
-                    </Link>
-                  </nav>
-                  <button
-                    onClick={handleLogout}
-                    className="px-6 py-2 block w-full text-left text-gray-800 hover:bg-gray-200"
+                  <Link
+                    to="/contact"
+                    className="px-6 py-2 block w-full text-gray-800 hover:bg-gray-200"
                   >
-                    Logout
-                  </button>
-                </div>
-              ) : (
+                    <h1>Contact</h1>
+                  </Link>
+                </nav>
+                <button
+                  onClick={handleLogout}
+                  className="px-6 py-2 block w-full text-left text-gray-800 hover:bg-gray-200"
+                >
+                  Logout
+                </button>
+              </div>
+            ) : (
+              <div className="flex flex-col">
                 <Link
                   to="/login"
-                  className="block w-full text-left py-2 px-4 text-gray-800 hover:bg-gray-200"
+                  className="block w-full text-left px-2 py-2 text-gray-800 hover:bg-gray-200"
                 >
                   Login
                 </Link>
-              )}
-            </div>
-          )}
-        </div>
+                <nav className="text-left block md:hidden">
+                  <Link
+                    to="/blog"
+                    className="px-2 py-2 block w-full text-gray-800 hover:bg-gray-200"
+                  >
+                    <h1>Blogs</h1>
+                  </Link>
+                  <Link
+                    to="/contact"
+                    className="px-2 py-2 block w-full text-gray-800 hover:bg-gray-200"
+                  >
+                    <h1>Contact</h1>
+                  </Link>
+                </nav>
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </header>
   );
