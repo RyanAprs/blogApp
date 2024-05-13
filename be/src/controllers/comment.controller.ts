@@ -1,17 +1,17 @@
 import { Request, Response } from "express";
 import { getAllComment, getCommentByBlogId } from "../services/comment.service";
 
-export const getUsers = async (req: Request, res: Response) => {
+export const getComments = async (req: Request, res: Response) => {
   const id = req.params.id;
 
   if (id) {
-    const user = await getCommentByBlogId(id);
-    if (user) {
+    const comment = await getCommentByBlogId(id);
+    if (comment) {
       return res.status(200).send({
         status: true,
         status_code: 200,
-        message: "Get detail data user successfully",
-        data: user,
+        message: "Get detail data comment successfully",
+        data: comment,
       });
     } else {
       return res.status(404).send({
@@ -23,19 +23,19 @@ export const getUsers = async (req: Request, res: Response) => {
     }
   } else {
     try {
-      const users = await getAllComment();
-      if (Array.isArray(users) && users.length > 0) {
+      const comments = await getAllComment();
+      if (Array.isArray(comments) && comments.length > 0) {
         return res.status(200).send({
           status: true,
           status_code: 200,
-          message: "Get data user success",
-          data: users,
+          message: "Get data comment success",
+          data: comments,
         });
       } else {
         return res.status(200).send({
           status: true,
           status_code: 200,
-          message: "No user",
+          message: "No comment",
           data: {},
         });
       }
