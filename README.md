@@ -3,7 +3,7 @@
 
 ## Features
 
-- SignIn, SignUp, Update Profile
+- SignIn, SignUp, Update Profile, Reset Password
 - Create Blog, Update Blog, Delete Blog, View Blog
 ----
 ## Tech
@@ -11,8 +11,8 @@
 Dillinger uses a number of open source projects to work properly:
 
 - FrontEnd: ReactJs, Tailwind CSS
-- Backend: Node.js, Express.js
-- Database: Uses MongoDB as a NoSQL database to store blog, user
+- Backend: Node.js, Express.js, and MongoDB.
+- Database: Uses MongoDB as a NoSQL database to store blog, user.
 ----
 ## Installation
 1. Make sure you have Node.js (version 12 or higher) and npm (Node Package Manager) installed on your system. You also need database management software like MongoDB.
