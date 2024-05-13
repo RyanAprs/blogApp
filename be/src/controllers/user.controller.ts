@@ -60,8 +60,6 @@ export const getUsers = async (req: Request, res: Response) => {
 };
 
 export const updateUser = async (req: Request, res: Response) => {
-
-
   try {
     await profileUploadAsync(req, res);
 
