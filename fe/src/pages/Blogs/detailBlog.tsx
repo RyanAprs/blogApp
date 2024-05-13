@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { FaPen, FaTrash, FaUser } from "react-icons/fa";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import BackButton from "../../components/atoms/backButton/backButton";
+import CommentSection from "../../components/atoms/commentSection/commentSection";
 
 const DetailBlog = () => {
   const [title, setTitle] = useState();
@@ -89,11 +90,11 @@ const DetailBlog = () => {
   };
 
   return (
-    <div className="flex flex-col p-2">
+    <div className="flex flex-col p-2 gap-5">
       <div className="flex p-4">
         <BackButton path="/blog" />
       </div>
-      <div className="px-4 ">
+      <div className="px-4">
         <img
           className="h-[420px] w-full object-cover border-[1px] border-black rounded"
           src={`http://localhost:3000/${blogImage}`}
@@ -144,6 +145,10 @@ const DetailBlog = () => {
           </Link>
         </div>
       )}
+      <div className="p-4 bg-gray-300 rounded">
+        <CommentSection />
+      </div>
+
       {showModal && (
         <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center">
           <div className="bg-white p-6 rounded-lg shadow-lg">
