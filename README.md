@@ -3,7 +3,7 @@
 
 ## Features
 
-- SignIn, SignUp, Update Profile, Reset Password
+- SignIn, SignUp, Update Profile, Reset Password, Comment for blogs
 - Create Blog, Update Blog, Delete Blog, View Blog
 ----
 ## Tech
