@@ -22,7 +22,7 @@ export const getComments = async (req: Request, res: Response) => {
       return res.status(404).send({
         status: false,
         status_code: 404,
-        message: "Data not found",
+        message: "No comment posted",
         data: {},
       });
     }
@@ -59,7 +59,7 @@ export const createComment = async (req: Request, res: Response) => {
   const comment_id = uuidv4();
   const { user_id, blog_id, comment, name } = req.body;
 
-  if ( !comment) {
+  if (!comment) {
     return res.status(400).send({
       status: false,
       status_code: 400,
@@ -88,6 +88,27 @@ export const createComment = async (req: Request, res: Response) => {
       status: false,
       status_code: 422,
       message: error.message,
+    });
+  }
+};
+
+export const getCommentByBlog = async (req: Request, res: Response) => {
+  const blog_id = req.params.blog_id;
+
+  const comment = await getCommentByBlogId(blog_id);
+  if (comment) {
+    return res.status(200).send({
+      status: true,
+      status_code: 200,
+      message: "Get detail data comment successfully",
+      data: comment,
+    });
+  } else {
+    return res.status(404).send({
+      status: false,
+      status_code: 404,
+      message: "No comment posted",
+      data: {},
     });
   }
 };

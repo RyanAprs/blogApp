@@ -11,8 +11,8 @@ export const getAllComment = async () => {
     });
 };
 
-export const getCommentByBlogId = async (id: string) => {
-  return await commentModel.findOne({ blog_id: id });
+export const getCommentByBlogId = async (blog_id: string) => {
+  return await commentModel.find({ blog_id: blog_id });
 };
 
 export const insertComment = async (payload: any) => {
