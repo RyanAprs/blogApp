@@ -15,7 +15,7 @@ import { getImageForBlog, getName } from "../services/user.service";
 
 export const getBlog = async (req: Request, res: Response) => {
   const id = req.params.id;
-  const q = req.params.q;
+  const q = req.query.query as string;
 
   if (id) {
     const blog = await getBlogById(id);

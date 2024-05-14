@@ -53,11 +53,17 @@ const Blogs = () => {
 
   const search = async (q) => {
     try {
-      if (q.length > 1) {
+      if (q.length > 0) {
         const response = await axios.get(
-          `http://localhost:3000/api/v1/blog/search/${q}`
+          `http://localhost:3000/api/v1/blog/search`,
+          {
+            params: {
+              query: q,
+            },
+          }
         );
         setBlogs(response.data.data);
+        console.log(response.data.data);
         setTotalPages(1);
       } else if (q.length === 0) {
         fetchBlogs();
@@ -83,7 +89,7 @@ const Blogs = () => {
           </Link>
         )}
       </div>
-      <div className="grid md:grid-cols-2 grid-cols-1 gap-4  text-black  justify-center">
+      <div className="grid md:grid-cols-2 grid-cols-1 gap-6  text-black  justify-center">
         {blogs.map((blog, index) => (
           <Link
             to={`detail/${blog.blog_id}`}
@@ -135,7 +141,7 @@ const Blogs = () => {
 
   return (
     <>
-      <div className="p-4 flex flex-col gap-6">
+      <div className="p-4 flex flex-col gap-3">
         <div>
           <input
             type="text"
@@ -148,7 +154,7 @@ const Blogs = () => {
         {Array.isArray(blogs) && blogs.length > 0 ? (
           <BlogList />
         ) : (
-          <div className="flex justify-center">
+          <div className="min-h-screen flex justify-center">
             <h1>No Blog Posted</h1>
           </div>
         )}
