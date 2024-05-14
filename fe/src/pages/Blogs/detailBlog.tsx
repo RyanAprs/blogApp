@@ -145,7 +145,7 @@ const DetailBlog = () => {
           </Link>
         </div>
       )}
-      <div className="p-4 bg-gray-300 rounded">
+      <div className="p-4 bg-gray-300 rounded mt-4">
         <CommentSection />
       </div>
 
