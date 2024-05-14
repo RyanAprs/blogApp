@@ -27,7 +27,6 @@ const CommentSection = () => {
 
       if (response.data.status_code === 200) {
         window.location.reload();
-        console.log(response.data.data);
         console.log("create comment berhasil");
       } else {
         console.log("create comment gagal");

@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import {
   getAllComment,
+  getCommentAndDelete,
   getCommentByBlogId,
   insertComment,
 } from "../services/comment.service";
@@ -109,6 +110,34 @@ export const getCommentByBlog = async (req: Request, res: Response) => {
       status_code: 404,
       message: "No comment posted",
       data: {},
+    });
+  }
+};
+
+export const deleteComment = async (req: Request, res: Response) => {
+  const postId = req.params.id;
+
+  try {
+    const result = await getCommentAndDelete(postId);
+    if (result) {
+      res.status(200).json({
+        status: true,
+        status_code: 200,
+        message: "Delete comment successfully",
+      });
+    } else {
+      res.status(404).json({
+        status: false,
+        status_code: 404,
+        message: "Data not found",
+        data: {},
+      });
+    }
+  } catch (error: any) {
+    return res.status(422).send({
+      status: false,
+      status_code: 422,
+      message: error.message,
     });
   }
 };
