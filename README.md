@@ -4,7 +4,7 @@
 ## Features
 
 - SignIn, SignUp, Update Profile, Reset Password, Comment for blogs
-- Create Blog, Update Blog, Delete Blog, View Blog
+- Create Blog, Update Blog, Delete Blog, View Blog, Search blog
 ----
 ## Tech
 
@@ -67,4 +67,4 @@ Base Url = http://localhost:3000/api/v1
 | POST | reset password | ``/auth/reset-password`` | - |
 | PUT | update user | ``/user/:id`` | ``/user/1`` |
 
-build with ❤️
+build with ❤️ by RysnAprs;
