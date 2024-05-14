@@ -11,4 +11,4 @@ export const CommentRouter: Router = Router();
 CommentRouter.get("/", getComments);
 CommentRouter.get("/:blog_id", getCommentByBlog);
 CommentRouter.post("/", createComment);
-CommentRouter.get("/:id", deleteComment);
+CommentRouter.delete("/:id", deleteComment);

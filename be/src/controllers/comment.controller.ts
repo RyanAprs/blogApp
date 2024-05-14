@@ -115,10 +115,10 @@ export const getCommentByBlog = async (req: Request, res: Response) => {
 };
 
 export const deleteComment = async (req: Request, res: Response) => {
-  const postId = req.params.id;
+  const id = req.params.id;
 
   try {
-    const result = await getCommentAndDelete(postId);
+    const result = await getCommentAndDelete(id);
     if (result) {
       res.status(200).json({
         status: true,

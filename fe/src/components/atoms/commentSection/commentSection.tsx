@@ -10,6 +10,8 @@ const CommentSection = () => {
   const [name, setName] = useState("");
   const [error, setError] = useState("");
   const [dataComment, setDataComment] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [idCommentToDelete, setIdCommentToDelete] = useState();
 
   const { id } = useParams();
 
@@ -86,6 +88,32 @@ const CommentSection = () => {
     }
   }, [id]);
 
+  const handleDelete = async (commentId) => {
+    setIdCommentToDelete(commentId);
+    setShowModal(true);
+  };
+
+  const confirmDelete = async () => {
+    console.log(idCommentToDelete);
+    
+    try {
+      const response = await axios.delete(
+        `http://localhost:3000/api/v1/comment/${idCommentToDelete}`
+      );
+      if (response.status === 200) {
+        window.location.reload();
+      }
+    } catch (error) {
+      console.log("Request error:", error);
+    } finally {
+      setShowModal(false);
+    }
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
+
   return (
     <div className="rounded-sm flex flex-col gap-3">
       <h3 className="text-2xl">Comments</h3>
@@ -99,9 +127,13 @@ const CommentSection = () => {
                   <p>{comment.comment}</p>
                 </div>
                 <div>
-                  <button>
-                    <FaTrash />
-                  </button>
+                  {user_id === comment.user_id ? (
+                    <button onClick={() => handleDelete(comment.comment_id)}>
+                      <FaTrash />
+                    </button>
+                  ) : (
+                    ""
+                  )}
                 </div>
               </div>
             </div>
@@ -137,6 +169,27 @@ const CommentSection = () => {
           <Link to="/login" className="bg-gray-400 px-3 py-2 rounded">
             Login
           </Link>
+        </div>
+      )}
+      {showModal && (
+        <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center">
+          <div className="bg-white p-6 rounded-lg shadow-lg">
+            <p>Are you sure you want to delete this comment?</p>
+            <div className="flex justify-center mt-4">
+              <button
+                onClick={confirmDelete}
+                className="bg-red-500 text-white px-4 py-2 rounded mr-2 hover:bg-red-600 transition-colors duration-300"
+              >
+                Yes
+              </button>
+              <button
+                onClick={closeModal}
+                className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition-colors duration-300"
+              >
+                No
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </div>

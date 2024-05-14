@@ -21,13 +21,7 @@ export const insertComment = async (payload: any) => {
 
 export const getCommentAndDelete = async (id: string) => {
   try {
-    const blog = await commentModel.findOne({ comment_id: id });
-    if (!blog) {
-      const error = new Error("Data not found");
-      throw error;
-    }
-    const result = await commentModel.findOneAndDelete({ comment_id: id });
-    return result;
+    return await commentModel.findOneAndDelete({ comment_id: id });
   } catch (error) {
     throw error;
   }
