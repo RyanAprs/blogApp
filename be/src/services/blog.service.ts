@@ -193,3 +193,10 @@ export const getBlogImage = async (id: string) => {
   const blogImage = blog?.image;
   return blogImage;
 };
+
+export const getBlogId = async (id: string) => {
+  const blog = await blogModel.findOne({ id });
+  const blogId = blog?.blog_id;
+  return blogId;
+};
+

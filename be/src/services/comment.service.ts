@@ -18,3 +18,4 @@ export const getCommentByBlogId = async (id: string) => {
 export const insertComment = async (payload: any) => {
   return await commentModel.create(payload);
 };
+
