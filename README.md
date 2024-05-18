@@ -67,4 +67,4 @@ Base Url = http://localhost:3000/api/v1
 | POST | reset password | ``/auth/reset-password`` | - |
 | PUT | update user | ``/user/:id`` | ``/user/1`` |
 
-build with ❤️ by RysnAprs;
+build with ❤️ by RyanAprs;

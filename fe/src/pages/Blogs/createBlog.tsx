@@ -84,7 +84,8 @@ const CreateBlog = () => {
   };
 
   return (
-    <div className="flex items-center justify-center">
+    <div className="flex flex-col p-4 items-center justify-center">
+      <div className="text-2xl">Create Blog</div>
       <div className="min-h-screen w-full flex flex-col justify-center p-8 rounded shadow-lg gap-10">
         {error && <p className="text-red-500">{error}</p>}
         <div className="flex items-center justify-center flex-col gap-2">

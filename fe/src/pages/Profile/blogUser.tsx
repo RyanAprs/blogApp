@@ -66,6 +66,8 @@ const BlogUser = () => {
 
   return (
     <div className="p-4 flex flex-col">
+      <div className="text-2xl flex items-center justify-center">My Blogs</div>
+
       <div className="flex  justify-between">
         <BackButton path={`/profile/${id}`} />
         {(user && user.user_id !== id) || user === null ? null : (
